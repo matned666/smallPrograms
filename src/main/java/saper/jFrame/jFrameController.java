@@ -13,10 +13,16 @@ public class jFrameController {
     private JTextField chooseYSizeField;
     private JTextField chooseNumberOfBombs;
     private JButton acceptButton;
+    private JButton topScoreButton;
+    private String name;
+    private JTextField writeYourName;
 
     public jFrameController() {
         initialize();
     }
+
+
+
 
     private void initialize() {
         firstWindowMessage.setBounds(10, 5, 400, 30);
@@ -28,7 +34,7 @@ public class jFrameController {
         JFrame firstWindow = new JFrame();
         firstWindow.setTitle("Super Retro Saper");
         firstWindow.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
-        firstWindow.setSize(540, 200);
+        firstWindow.setSize(540, 250);
         firstWindow.setResizable(true);
         firstWindow.add(acceptButton());
         firstWindow.add(chooseXSizeField());
@@ -39,6 +45,9 @@ public class jFrameController {
         firstWindow.add(chooseNumberOfBombsJLabel());
         firstWindow.add(firstWindowMessage);
         firstWindow.add(firstWindowImageLabel());
+        firstWindow.add(topScoreButton());
+        firstWindow.add(writeYourName());
+        firstWindow.add(writeYourNameJLabel());
         firstWindow.setLayout(null);
         firstWindow.setVisible(true);
     }
@@ -85,6 +94,20 @@ public class jFrameController {
         return chooseNumberOfBombs;
     }
 
+
+    private Component writeYourNameJLabel() {
+        JLabel writeYourNameJLabel = new JLabel();
+        writeYourNameJLabel.setBounds(10, 135, 400, 40);
+        writeYourNameJLabel.setText("You can write your name:");
+        return writeYourNameJLabel;
+    }
+    private JTextField writeYourName() {
+        writeYourName = new JTextField();
+        addOnEnterKeyListener(writeYourName);
+        writeYourName.setBounds(10, 165, 400, 40);
+        return writeYourName;
+    }
+
     private JButton acceptButton(){
         acceptButton = new JButton(new ImageIcon("src\\main\\resources\\saper\\buttonAccept.png"));
         acceptButton.setBounds(10, 100, 400, 40);
@@ -94,8 +117,10 @@ public class jFrameController {
         acceptButton.addActionListener(actionEvent -> {
             try {
                 jMatrix matrix = new jMatrix(Integer.parseInt(chooseXSizeField.getText()), Integer.parseInt(chooseYSizeField.getText()), Integer.parseInt(chooseNumberOfBombs.getText()));
-                System.out.println(Integer.parseInt(chooseXSizeField.getText())*Integer.parseInt(chooseYSizeField.getText()));
-                System.out.println(Integer.parseInt(chooseNumberOfBombs.getText()));
+                name = writeYourName.getText();
+                matrix.getMatrix().setPlayerRandomName(name);
+
+
                 if(Integer.parseInt(chooseXSizeField.getText())*Integer.parseInt(chooseYSizeField.getText()) >= Integer.parseInt(chooseNumberOfBombs.getText())){
                     throw new TooMuchBombsException();
                 }
@@ -109,22 +134,17 @@ public class jFrameController {
         return acceptButton;
     }
 
-//private JButton topScoreButton(){
-//        acceptButton = new JButton(new ImageIcon("src\\main\\resources\\saper\\buttonAccept.png"));
-//        acceptButton.setBounds(10, 100, 400, 40);
-//        acceptButton.setText("ACCEPT GAME");
-//        acceptButton.setHorizontalTextPosition(JLabel.CENTER);
-//        acceptButton.setVerticalTextPosition(JLabel.CENTER);
-//        acceptButton.addActionListener(actionEvent -> {
-//            try {
-//                jMatrix matrix = new jMatrix(Integer.parseInt(chooseXSizeField.getText()), Integer.parseInt(chooseYSizeField.getText()), Integer.parseInt(chooseNumberOfBombs.getText()));
-//
-//            } catch (Exception ex) {
-//                firstWindowMessage.setText("Input CORRECT parameters of your game:");
-//            }
-//        });
-//        return acceptButton;
-//    }
+private JButton topScoreButton(){
+    topScoreButton = new JButton(new ImageIcon("src\\main\\resources\\saper\\buttonAccept.png"));
+    topScoreButton.setBounds(420, 165, 100, 40);
+    topScoreButton.setText("TOP 100");
+    topScoreButton.setHorizontalTextPosition(JLabel.CENTER);
+    topScoreButton.setVerticalTextPosition(JLabel.CENTER);
+    topScoreButton.addActionListener(actionEvent -> {
+        JTopScoreFrame a = new JTopScoreFrame();
+    });
+        return topScoreButton;
+    }
 
     private void addOnEnterKeyListener(JTextField textField){
         textField.addKeyListener(new KeyListener() {
@@ -133,6 +153,10 @@ public class jFrameController {
                 if (e.getKeyChar() == 10) {
                     try {
                         jMatrix matrix = new jMatrix(Integer.parseInt(chooseXSizeField.getText()), Integer.parseInt(chooseYSizeField.getText()), Integer.parseInt(chooseNumberOfBombs.getText()));
+                        name = writeYourName.getText();
+                        matrix.getMatrix().setPlayerRandomName(name);
+
+
                         if(Integer.parseInt(chooseXSizeField.getText())*Integer.parseInt(chooseYSizeField.getText()) >= Integer.parseInt(chooseNumberOfBombs.getText())){
                         throw new TooMuchBombsException();
                         }

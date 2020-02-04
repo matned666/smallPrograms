@@ -33,6 +33,10 @@ class jMatrix {
         jFrame();
     }
 
+    public Matrix getMatrix() {
+        return matrix;
+    }
+
     public String getTime() { return time; }
 
     private void jFrame() {
@@ -42,7 +46,7 @@ class jMatrix {
         createFrame();
         messageTxt = new JLabel();
         messageTxt.setBounds(20, frameYSize - 50, frameXSize - 60, 40);
-        messageTxt.setFont(new Font("Arial", Font.BOLD, 20));
+        messageTxt.setFont(new Font("Arial", Font.BOLD, 16));
         messageTxt.setText("WELCOME");
         messageImage = new JButton(new ImageIcon("src\\main\\resources\\saper\\emptyField.png"));
         messageImage.setBounds(frameXSize - 70, frameYSize - 40, 40, 40);

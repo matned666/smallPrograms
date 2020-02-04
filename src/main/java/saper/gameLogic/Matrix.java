@@ -1,20 +1,51 @@
 package saper.gameLogic;
 
+import org.apache.commons.lang3.RandomStringUtils;
+import org.joda.time.DateTime;
+import saper.fileOperations.Points;
+import saper.fileOperations.ScoreObject;
+import saper.fileOperations.ScoreTop100List;
+
 public class Matrix {
 
     private FieldObj[][] matrix;
     private int numberOfBombs;
     private int numberOfFields;
     private boolean[] bombFields;
-    private String gameMessage;
     private GameState gameState;
+    private long startTime;
+    private int gameTime;
+    private String playerRandomName;
+
+    private int timeFormatReducer ;
+    private String gameOverMessage;
+    private String gameWinMessage ;
+    private String gameMessage ;
+    private int points;
+    private  int col;
+    private  int row;
+    private ScoreTop100List top100;
 
     public Matrix(int col, int row, int numberOfBombs) {
+        this.row = row;
+        this.col = col;
+        startTime = System.nanoTime();
         this.numberOfBombs = numberOfBombs;
         this.numberOfFields = (col) * (row);
         this.matrix = new FieldObj[row][col];
-        gameMessage = "WELCOME";
         gameState = GameState.PENDING;
+
+        int playerNameLenght = (int) (Math.random() * 10) +3;
+        playerRandomName = RandomStringUtils.random(1, true, false).toUpperCase()+RandomStringUtils.random(playerNameLenght, true, false).toLowerCase()+RandomStringUtils.random(2, false, true);
+
+        top100 = new ScoreTop100List();
+        top100.read();
+
+        timeFormatReducer = 10000000;
+        gameOverMessage = "GAME OVER";
+        gameWinMessage = "YOU WIN";
+        gameMessage = "WELCOME";
+
         generateMatrix();
     }
 
@@ -28,6 +59,13 @@ public class Matrix {
         return temp;
     }
 
+    public String getPlayerRandomName() {
+        return playerRandomName;
+    }
+
+    public long getGameTime() {
+        return gameTime;
+    }
 
     public FieldObj[][] getMatrix() {
         return matrix;
@@ -41,42 +79,39 @@ public class Matrix {
         return gameState;
     }
 
+    public void setPlayerRandomName(String playerRandomName) {
+        if(!playerRandomName.equals(""))
+        this.playerRandomName = playerRandomName;
+    }
+
     public void setNeighbors() {
         for (int i = 0; i < matrix.length; i++) {
             for (int j = 0; j < matrix[i].length; j++) {
                 int numberOfBombsInSurround = 0;
                 try {
                     if (matrix[i - 1][j - 1].isBomb()) numberOfBombsInSurround++;
-                } catch (ArrayIndexOutOfBoundsException ignored) {
-                }
+                } catch (ArrayIndexOutOfBoundsException ignored) { }
                 try {
                     if (matrix[i - 1][j].isBomb()) numberOfBombsInSurround++;
-                } catch (ArrayIndexOutOfBoundsException ignored) {
-                }
+                } catch (ArrayIndexOutOfBoundsException ignored) { }
                 try {
                     if (matrix[i - 1][j + 1].isBomb()) numberOfBombsInSurround++;
-                } catch (ArrayIndexOutOfBoundsException ignored) {
-                }
+                } catch (ArrayIndexOutOfBoundsException ignored) { }
                 try {
                     if (matrix[i][j - 1].isBomb()) numberOfBombsInSurround++;
-                } catch (ArrayIndexOutOfBoundsException ignored) {
-                }
+                } catch (ArrayIndexOutOfBoundsException ignored) { }
                 try {
                     if (matrix[i][j + 1].isBomb()) numberOfBombsInSurround++;
-                } catch (ArrayIndexOutOfBoundsException ignored) {
-                }
+                } catch (ArrayIndexOutOfBoundsException ignored) { }
                 try {
                     if (matrix[i + 1][j - 1].isBomb()) numberOfBombsInSurround++;
-                } catch (ArrayIndexOutOfBoundsException ignored) {
-                }
+                } catch (ArrayIndexOutOfBoundsException ignored) { }
                 try {
                     if (matrix[i + 1][j].isBomb()) numberOfBombsInSurround++;
-                } catch (ArrayIndexOutOfBoundsException ignored) {
-                }
+                } catch (ArrayIndexOutOfBoundsException ignored) { }
                 try {
                     if (matrix[i + 1][j + 1].isBomb()) numberOfBombsInSurround++;
-                } catch (ArrayIndexOutOfBoundsException ignored) {
-                }
+                } catch (ArrayIndexOutOfBoundsException ignored) { }
                 matrix[i][j].setNumberOfBombsInSurround(numberOfBombsInSurround);
             }
         }
@@ -88,17 +123,23 @@ public class Matrix {
         }
         if (matrix[x][y].isBomb()) {
             openAll();
+            this.gameTime = (int) ((System.nanoTime() - startTime)/timeFormatReducer);
+
             matrix[x][y].setBlownBomb(true);
-            gameMessage = "GAME OVER ";
-            System.out.println("GAME OVER !!!");
+            this.points = 0;
+            gameMessage = gameOverMessage +" "+  this.points +"pts.";
             gameState = GameState.GAME_OVER;
         }
         openFieldInner(x, y);
         if (getNumberOfClosedFields() == numberOfBombs) {
-            openAll();
-            gameMessage = "YOU WIN";
-            System.out.println("CONGRATULATIONS !!!");
             gameState = GameState.WIN;
+            this.gameTime = (int) ((System.nanoTime() - startTime)/timeFormatReducer);
+            this.points = Points.get(gameTime,col,row,numberOfBombs);
+            openAll();
+            gameMessage = gameWinMessage+" "+  this.points +"pts.";
+            top100.read();
+            top100.add(new ScoreObject(playerRandomName,new DateTime(),points,String.valueOf(gameTime)));
+            top100.save();
         }
     }
 
@@ -154,3 +195,5 @@ public class Matrix {
     }
 
 }
+
+

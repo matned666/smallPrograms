@@ -1,5 +1,6 @@
 package saper.gameLogic;
 
+import org.apache.commons.lang3.RandomStringUtils;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -105,6 +106,14 @@ class MatrixTest {
 
         assertEquals(matrix.getNumberOfClosedFields(), 5);
     }
+
+     @Test
+    public void isNameMakerMakerWorking() {
+        Matrix matrix = new Matrix(10, 10, 10);
+         System.out.println(matrix.getPlayerRandomName() + "    length:"+matrix.getPlayerRandomName().length());
+    }
+
+
 
 
 }

@@ -16,6 +16,9 @@ public class ScoreTop100List implements Serializable {
         list.add(obj);
         list.sort(new ScoreObjComparator());
         if(list.size()>100) list.remove(list.size()-1);
+        for(int i = 0; i < list.size();i++){
+            list.get(i).setIdNumber(1+i);
+        }
     }
 
     public LinkedList get(){

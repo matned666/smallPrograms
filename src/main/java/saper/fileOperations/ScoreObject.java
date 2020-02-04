@@ -5,6 +5,7 @@ import java.io.Serializable;
 
 public class ScoreObject implements Serializable {
 
+    private int idNumber;
     private String name;
     private DateTime dateTime;
     private int score;
@@ -14,7 +15,12 @@ public class ScoreObject implements Serializable {
         return score;
     }
 
-    public ScoreObject(String name, DateTime dateTime, int score) {
+    public void setIdNumber(int idNumber) {
+        this.idNumber = idNumber;
+    }
+
+    public ScoreObject(String name, DateTime dateTime, int score, String gameTime) {
+        this.gameTime = gameTime;
         this.name = name;
         this.dateTime = dateTime;
         this.score = score;
@@ -22,6 +28,6 @@ public class ScoreObject implements Serializable {
 
     @Override
     public String toString() {
-        return name+" >>> scored: "+score+" >>> "+dateTime;
+        return idNumber+": "+ name+" >>> score:"+score+" >>> time:"+gameTime+" >>> date:"+dateTime;
     }
 }
