@@ -1,8 +1,10 @@
 package storeWithTables.mechanic;
 
-public interface Product {
+public abstract class Product {
 
-    int getPrice();
-    String getName();
+    int nettPrice;
+    String productName;
+    String description;
+
 
 }

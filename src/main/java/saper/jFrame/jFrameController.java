@@ -1,10 +1,18 @@
 package saper.jFrame;
 
+import saper.exceptions.*;
 import javax.swing.*;
+import java.awt.*;
+import java.awt.event.KeyEvent;
+import java.awt.event.KeyListener;
 
 public class jFrameController {
 
     private JLabel firstWindowMessage = new JLabel();
+    private JTextField chooseXSizeField;
+    private JTextField chooseYSizeField;
+    private JTextField chooseNumberOfBombs;
+    private JButton acceptButton;
 
     public jFrameController() {
         initialize();
@@ -22,52 +30,123 @@ public class jFrameController {
         firstWindow.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
         firstWindow.setSize(540, 200);
         firstWindow.setResizable(true);
+        firstWindow.add(acceptButton());
+        firstWindow.add(chooseXSizeField());
+        firstWindow.add(chooseYSizeField());
+        firstWindow.add(chooseNumberOfBombs());
+        firstWindow.add(chooseXSizeFieldJLabel());
+        firstWindow.add(chooseYSizeFieldJLabel());
+        firstWindow.add(chooseNumberOfBombsJLabel());
+        firstWindow.add(firstWindowMessage);
+        firstWindow.add(firstWindowImageLabel());
+        firstWindow.setLayout(null);
+        firstWindow.setVisible(true);
+    }
 
-        JButton acceptButton = new JButton(new ImageIcon("src\\main\\resources\\saper\\buttonAccept.png"));
+    private Component chooseXSizeFieldJLabel() {
+        JLabel chooseXSizeFieldJLabel = new JLabel();
+        chooseXSizeFieldJLabel.setBounds(10, 25, 120, 30);
+        chooseXSizeFieldJLabel.setText("X size:");
+        return chooseXSizeFieldJLabel;
+    }
+
+   private Component chooseYSizeFieldJLabel() {
+       JLabel chooseYSizeFieldJLabel = new JLabel();
+       chooseYSizeFieldJLabel.setBounds(150, 25, 120, 30);
+       chooseYSizeFieldJLabel.setText("Y size:");
+        return chooseYSizeFieldJLabel;
+    }
+
+   private Component chooseNumberOfBombsJLabel() {
+       JLabel chooseNumberOfBombsJLabel = new JLabel();
+       chooseNumberOfBombsJLabel.setBounds(290, 25, 120, 30);
+       chooseNumberOfBombsJLabel.setText("Number of bombs:");
+        return chooseNumberOfBombsJLabel;
+    }
+
+    private JTextField chooseXSizeField() {
+        chooseXSizeField = new JTextField();
+        addOnEnterKeyListener(chooseXSizeField);
+        chooseXSizeField.setBounds(10, 50, 120, 40);
+        return chooseXSizeField;
+    }
+
+    private JTextField chooseYSizeField() {
+        chooseYSizeField = new JTextField();
+        addOnEnterKeyListener(chooseYSizeField);
+        chooseYSizeField.setBounds(150, 50, 120, 40);
+        return chooseYSizeField;
+    }
+
+    private JTextField chooseNumberOfBombs() {
+        chooseNumberOfBombs = new JTextField();
+        addOnEnterKeyListener(chooseNumberOfBombs);
+        chooseNumberOfBombs.setBounds(290, 50, 120, 40);
+        return chooseNumberOfBombs;
+    }
+
+    private JButton acceptButton(){
+        acceptButton = new JButton(new ImageIcon("src\\main\\resources\\saper\\buttonAccept.png"));
         acceptButton.setBounds(10, 100, 400, 40);
         acceptButton.setText("ACCEPT GAME");
         acceptButton.setHorizontalTextPosition(JLabel.CENTER);
         acceptButton.setVerticalTextPosition(JLabel.CENTER);
-
-
-        JTextField chooseXSizeField = new JTextField();
-        JTextField chooseYSizeField = new JTextField();
-        JTextField chooseNumberOfBombs = new JTextField();
-        chooseXSizeField.setBounds(10, 50, 120, 40);
-        chooseYSizeField.setBounds(150, 50, 120, 40);
-        chooseNumberOfBombs.setBounds(290, 50, 120, 40);
-
-        JLabel chooseXSizeFieldJLabel = new JLabel();
-        JLabel chooseYSizeFieldJLabel = new JLabel();
-        JLabel chooseNumberOfBombsJLabel = new JLabel();
-        chooseXSizeFieldJLabel.setBounds(10, 25, 120, 30);
-        chooseYSizeFieldJLabel.setBounds(150, 25, 120, 30);
-        chooseNumberOfBombsJLabel.setBounds(290, 25, 120, 30);
-        chooseXSizeFieldJLabel.setText("X size:");
-        chooseYSizeFieldJLabel.setText("Y size:");
-        chooseNumberOfBombsJLabel.setText("Number of bombs:");
-
-        firstWindow.add(acceptButton);
-        firstWindow.add(chooseXSizeField);
-        firstWindow.add(chooseYSizeField);
-        firstWindow.add(chooseNumberOfBombs);
-        firstWindow.add(chooseXSizeFieldJLabel);
-        firstWindow.add(chooseYSizeFieldJLabel);
-        firstWindow.add(chooseNumberOfBombsJLabel);
-        firstWindow.add(firstWindowMessage);
-        firstWindow.add(firstWindowImageLabel());
-
         acceptButton.addActionListener(actionEvent -> {
             try {
                 jMatrix matrix = new jMatrix(Integer.parseInt(chooseXSizeField.getText()), Integer.parseInt(chooseYSizeField.getText()), Integer.parseInt(chooseNumberOfBombs.getText()));
+                System.out.println(Integer.parseInt(chooseXSizeField.getText())*Integer.parseInt(chooseYSizeField.getText()));
+                System.out.println(Integer.parseInt(chooseNumberOfBombs.getText()));
+                if(Integer.parseInt(chooseXSizeField.getText())*Integer.parseInt(chooseYSizeField.getText()) >= Integer.parseInt(chooseNumberOfBombs.getText())){
+                    throw new TooMuchBombsException();
+                }
+            } catch (TooMuchBombsException ex2){
+                firstWindowMessage.setText("More bombs than fields, try again:");
 
-            } catch (Exception ex) {
+        } catch (Exception ex) {
                 firstWindowMessage.setText("Input CORRECT parameters of your game:");
             }
         });
+        return acceptButton;
+    }
 
-        firstWindow.setLayout(null);
-        firstWindow.setVisible(true);
+//private JButton topScoreButton(){
+//        acceptButton = new JButton(new ImageIcon("src\\main\\resources\\saper\\buttonAccept.png"));
+//        acceptButton.setBounds(10, 100, 400, 40);
+//        acceptButton.setText("ACCEPT GAME");
+//        acceptButton.setHorizontalTextPosition(JLabel.CENTER);
+//        acceptButton.setVerticalTextPosition(JLabel.CENTER);
+//        acceptButton.addActionListener(actionEvent -> {
+//            try {
+//                jMatrix matrix = new jMatrix(Integer.parseInt(chooseXSizeField.getText()), Integer.parseInt(chooseYSizeField.getText()), Integer.parseInt(chooseNumberOfBombs.getText()));
+//
+//            } catch (Exception ex) {
+//                firstWindowMessage.setText("Input CORRECT parameters of your game:");
+//            }
+//        });
+//        return acceptButton;
+//    }
+
+    private void addOnEnterKeyListener(JTextField textField){
+        textField.addKeyListener(new KeyListener() {
+            @Override
+            public void keyTyped(KeyEvent e) {
+                if (e.getKeyChar() == 10) {
+                    try {
+                        jMatrix matrix = new jMatrix(Integer.parseInt(chooseXSizeField.getText()), Integer.parseInt(chooseYSizeField.getText()), Integer.parseInt(chooseNumberOfBombs.getText()));
+                        if(Integer.parseInt(chooseXSizeField.getText())*Integer.parseInt(chooseYSizeField.getText()) >= Integer.parseInt(chooseNumberOfBombs.getText())){
+                        throw new TooMuchBombsException();
+                        }
+                    } catch (TooMuchBombsException ex2){
+                        firstWindowMessage.setText("More bombs than fields, try again:");
+                    } catch (Exception ex) {
+                        firstWindowMessage.setText("Input CORRECT parameters of your game:");
+                    }
+                }
+            }
+            @Override
+            public void keyPressed(KeyEvent e) { }
+            @Override
+            public void keyReleased(KeyEvent e) { }  });
     }
 
     private JLabel firstWindowImageLabel() {
