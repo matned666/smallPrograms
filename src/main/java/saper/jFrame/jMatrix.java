@@ -41,7 +41,7 @@ class jMatrix {
 
     private void jFrame() {
         frame = new JFrame();
-        frame.setResizable(true);
+        frame.setResizable(false);
         frame.setSize(frameXSize, frameYSize + 70);
         createFrame();
         messageTxt = new JLabel();

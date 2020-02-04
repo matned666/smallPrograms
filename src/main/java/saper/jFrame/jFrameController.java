@@ -35,7 +35,7 @@ public class jFrameController {
         firstWindow.setTitle("Super Retro Saper");
         firstWindow.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
         firstWindow.setSize(540, 250);
-        firstWindow.setResizable(true);
+        firstWindow.setResizable(false);
         firstWindow.add(acceptButton());
         firstWindow.add(chooseXSizeField());
         firstWindow.add(chooseYSizeField());
