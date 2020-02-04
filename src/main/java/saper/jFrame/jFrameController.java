@@ -32,7 +32,7 @@ public class jFrameController {
 
     private void firstWindow() {
         JFrame firstWindow = new JFrame();
-        firstWindow.setTitle("Super Retro Saper");
+        firstWindow.setTitle("Super Retro Saper v.1.0");
         firstWindow.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
         firstWindow.setSize(540, 250);
         firstWindow.setResizable(false);

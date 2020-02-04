@@ -138,7 +138,7 @@ public class Matrix {
             openAll();
             gameMessage = gameWinMessage+" "+  this.points +"pts.";
             top100.read();
-            top100.add(new ScoreObject(playerRandomName,new DateTime(),points,String.valueOf(gameTime)));
+            top100.add(new ScoreObject(playerRandomName,new DateTime(),points,String.valueOf(gameTime), col, row, numberOfBombs));
             top100.save();
         }
     }
