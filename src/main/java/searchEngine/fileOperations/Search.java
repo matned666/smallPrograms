@@ -19,8 +19,8 @@ public class Search {
         dateOfOperation = new LocalDate();
     }
 
-    public String toString(){
-        return "Searched entry:'"+value+"', operation success: "+operationSuccess+", time of search: "+timeOfOperation+" "+dateOfOperation+", found items:"+numberOfFoundItems;
+    public String toString() {
+        return "Searched entry:'" + value + "', operation success: " + operationSuccess + ", time of search: " + timeOfOperation + " " + dateOfOperation + ", found items:" + numberOfFoundItems;
     }
 }
 

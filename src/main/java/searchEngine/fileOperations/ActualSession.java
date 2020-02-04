@@ -32,15 +32,15 @@ public class ActualSession {
         this.sessionEndDate = sessionEndDate;
     }
 
-    public String toString(){
+    public String toString() {
         String temp = "<p>Started a new session:</p>";
-        temp += "<p>Session start: "+sessionStartTime+" "+sessionStartDate+"</p>";
-        for(Search el: sessionSearchesList){
-            temp+= "<p>"+el+"</p>";
+        temp += "<p>Session start: " + sessionStartTime + " " + sessionStartDate + "</p>";
+        for (Search el : sessionSearchesList) {
+            temp += "<p>" + el + "</p>";
         }
-        if(sessionEndTime == null){
+        if (sessionEndTime == null) {
             temp += "<p>^^^^ ACTUAL SESSION  ^^^^</p></p><br></p>";
-        }else {
+        } else {
             temp += "<p>Session end: " + sessionEndTime + " " + sessionEndDate + "</p>";
         }
 

@@ -81,9 +81,11 @@ public class Frame {
                     newSession.getSessionSearchesList().add(new Search(regex, searchEngine.isSearchedItemInResource(regex), searchEngine.getTitlesList().size()));
                 }
             }
+
             @Override
             public void keyPressed(KeyEvent keyEvent) {
             }
+
             @Override
             public void keyReleased(KeyEvent keyEvent) {
             }
@@ -139,7 +141,7 @@ public class Frame {
     }
 
     private JLabel imageLabel() {
-        imageLabel = new JLabel(new ImageIcon("C:\\Users\\matni\\IdeaProjects\\SmallPrograms\\src\\main\\resources\\guugle.png"));
+        imageLabel = new JLabel(new ImageIcon("src\\main\\resources\\guugle.png"));
         imageLabel.setBounds(100, 30, 500, 40);
         return imageLabel;
     }

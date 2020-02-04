@@ -29,9 +29,17 @@ public class Matrix {
     }
 
 
-    public FieldObj[][] getMatrix() { return matrix; }
-    public String getGameMessage() { return gameMessage; }
-    public GameState getGameState() { return gameState; }
+    public FieldObj[][] getMatrix() {
+        return matrix;
+    }
+
+    public String getGameMessage() {
+        return gameMessage;
+    }
+
+    public GameState getGameState() {
+        return gameState;
+    }
 
     public void setNeighbors() {
         for (int i = 0; i < matrix.length; i++) {

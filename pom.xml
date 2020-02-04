@@ -8,14 +8,6 @@
     <artifactId>SmallPrograms</artifactId>
     <version>1.0-SNAPSHOT</version>
 
-    <configuration>
-        <archive>
-            <manifest>
-                <mainClass>java.ticTacToe.Main</mainClass>
-            </manifest>
-        </archive>
-    </configuration>
-
     <dependencies>
         <dependency>
             <groupId>org.junit.jupiter</groupId>

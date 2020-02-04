@@ -66,12 +66,12 @@ class SearchEngine {
 }
 
 
-class Test{
+class Test {
 
     public static void main(String[] args) {
         SearchEngine searchEngine = new SearchEngine(Resources.list());
         searchEngine.isSearchedItemInResource("miecz");
-        for (Object el: searchEngine.getTitlesList()){
+        for (Object el : searchEngine.getTitlesList()) {
             System.out.println(el);
         }
         System.out.println(searchEngine.getTitlesList().size());

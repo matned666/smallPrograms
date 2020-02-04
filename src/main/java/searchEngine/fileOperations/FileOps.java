@@ -7,9 +7,9 @@ import java.util.Scanner;
 
 public class FileOps {
 
-    private static  String path = "C:\\Users\\matni\\IdeaProjects\\JAVAWROtest\\src\\main\\java\\pl\\sda\\rafal\\zientara\\tdd\\pdfExercise\\fileOperations\\data\\sessions.txt";
+    private static String path = "src\\main\\java\\searchEngine\\fileOperations\\data\\sessions.txt";
 
-    public static void writeStringToFile (String value) throws FileNotFoundException {
+    public static void writeStringToFile(String value) throws FileNotFoundException {
         PrintWriter out = new PrintWriter(path);
         out.println(value);
         out.close();
@@ -19,7 +19,7 @@ public class FileOps {
         StringBuilder temp = new StringBuilder();
         File file = new File(path);
         Scanner sc = new Scanner(file);
-        while (sc.hasNextLine()){
+        while (sc.hasNextLine()) {
             temp.append(sc.nextLine());
         }
         return temp.toString();

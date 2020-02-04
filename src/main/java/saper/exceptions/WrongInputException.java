@@ -1,4 +1,4 @@
 package saper.exceptions;
 
-public class WrongInputException extends  Exception {
+public class WrongInputException extends Exception {
 }

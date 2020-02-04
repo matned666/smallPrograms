@@ -13,7 +13,6 @@ class JField {
     private FieldObj fieldData;
 
 
-
     JField(FieldObj fieldData, int col, int row) {
         this.col = col;
         this.row = row;
