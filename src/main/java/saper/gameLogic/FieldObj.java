@@ -23,7 +23,7 @@ public class FieldObj {
         isBlownBomb = blownBomb;
     }
 
-    void setChecked(boolean checked) {
+    public void setChecked(boolean checked) {
         isChecked = checked;
     }
 

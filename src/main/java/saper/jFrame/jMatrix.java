@@ -6,6 +6,8 @@ import saper.gameLogic.Matrix;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionListener;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 import java.util.concurrent.atomic.AtomicInteger;
 import java.util.concurrent.atomic.AtomicReference;
 
@@ -142,6 +144,18 @@ class jMatrix {
                     if (matrix.getGameState() == GameState.WIN)
                         messageImage.setIcon(new ImageIcon("src\\main\\resources\\saper\\win.png"));
                 }
+            }
+        });
+
+        jFieldAction.getButton().addMouseListener(new MouseAdapter(){
+            public void mouseClicked(MouseEvent e){
+             if(!matrix.getMatrix()[row][col].isChecked()) {
+                 matrix.getMatrix()[row][col].setChecked(true);
+                 jFields[row][col].getButton().setIcon(new ImageIcon("src\\main\\resources\\saper\\saperButtonFieldChecked.png"));
+             }else{
+                 matrix.getMatrix()[row][col].setChecked(false);
+                 jFields[row][col].getButton().setIcon(new ImageIcon("src\\main\\resources\\saper\\saperButtonField.png"));
+             }
             }
         });
     }
