@@ -11,7 +11,7 @@ import java.awt.event.MouseEvent;
 import java.util.concurrent.atomic.AtomicInteger;
 import java.util.concurrent.atomic.AtomicReference;
 
-class jMatrix {
+class JMatrix {
 
     private String time;
     private int col;
@@ -26,7 +26,7 @@ class jMatrix {
     private JButton messageImage;
     private JLabel timer;
 
-    jMatrix(int col, int row, int numberOfBombs) {
+    JMatrix(int col, int row, int numberOfBombs) {
         this.numberOfBombs = numberOfBombs;
         this.col = col;
         this.row = row;

@@ -6,16 +6,18 @@ import java.awt.*;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 
-public class jFrameController {
+public class JFrameController {
 
     private JLabel firstWindowMessage = new JLabel();
     private JTextField chooseXSizeField;
     private JTextField chooseYSizeField;
     private JTextField chooseNumberOfBombs;
+    private JButton acceptButton;
+    private JButton topScoreButton;
     private String name;
     private JTextField writeYourName;
 
-    public jFrameController() {
+    public JFrameController() {
 
     }
 
@@ -107,14 +109,14 @@ public class jFrameController {
     }
 
     private JButton acceptButton(){
-        JButton acceptButton = new JButton(new ImageIcon("src\\main\\resources\\saper\\buttonAccept.png"));
+        acceptButton = new JButton(new ImageIcon("src\\main\\resources\\saper\\buttonAccept.png"));
         acceptButton.setBounds(10, 100, 400, 40);
         acceptButton.setText("ACCEPT GAME");
         acceptButton.setHorizontalTextPosition(JLabel.CENTER);
         acceptButton.setVerticalTextPosition(JLabel.CENTER);
         acceptButton.addActionListener(actionEvent -> {
             try {
-                jMatrix matrix = new jMatrix(Integer.parseInt(chooseXSizeField.getText()), Integer.parseInt(chooseYSizeField.getText()), Integer.parseInt(chooseNumberOfBombs.getText()));
+                JMatrix matrix = new JMatrix(Integer.parseInt(chooseXSizeField.getText()), Integer.parseInt(chooseYSizeField.getText()), Integer.parseInt(chooseNumberOfBombs.getText()));
                 name = writeYourName.getText();
                 matrix.getMatrix().setPlayerRandomName(name);
 
@@ -133,7 +135,7 @@ public class jFrameController {
     }
 
 private JButton topScoreButton(){
-    JButton topScoreButton = new JButton(new ImageIcon("src\\main\\resources\\saper\\buttonAccept.png"));
+    topScoreButton = new JButton(new ImageIcon("src\\main\\resources\\saper\\buttonAccept.png"));
     topScoreButton.setBounds(420, 165, 100, 40);
     topScoreButton.setText("TOP 100");
     topScoreButton.setHorizontalTextPosition(JLabel.CENTER);
@@ -149,7 +151,7 @@ private JButton topScoreButton(){
             public void keyTyped(KeyEvent e) {
                 if (e.getKeyChar() == 10) {
                     try {
-                        jMatrix matrix = new jMatrix(Integer.parseInt(chooseXSizeField.getText()), Integer.parseInt(chooseYSizeField.getText()), Integer.parseInt(chooseNumberOfBombs.getText()));
+                        JMatrix matrix = new JMatrix(Integer.parseInt(chooseXSizeField.getText()), Integer.parseInt(chooseYSizeField.getText()), Integer.parseInt(chooseNumberOfBombs.getText()));
                         name = writeYourName.getText();
                         matrix.getMatrix().setPlayerRandomName(name);
 

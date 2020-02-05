@@ -1,12 +1,12 @@
 package saper;
 
-import saper.jFrame.jFrameController;
+import saper.jFrame.JFrameController;
 
 public class Main {
 
     public static void main(String[] args) {
 
-        jFrameController controller = new jFrameController();
+        JFrameController controller = new JFrameController();
         controller.initialize();
 
     }
