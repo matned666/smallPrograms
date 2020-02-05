@@ -12,19 +12,17 @@ public class jFrameController {
     private JTextField chooseXSizeField;
     private JTextField chooseYSizeField;
     private JTextField chooseNumberOfBombs;
-    private JButton acceptButton;
-    private JButton topScoreButton;
     private String name;
     private JTextField writeYourName;
 
     public jFrameController() {
-        initialize();
+
     }
 
 
 
 
-    private void initialize() {
+    public void initialize() {
         firstWindowMessage.setBounds(10, 5, 400, 30);
         firstWindowMessage.setText("Input parameters of your game:");
         firstWindow();
@@ -109,7 +107,7 @@ public class jFrameController {
     }
 
     private JButton acceptButton(){
-        acceptButton = new JButton(new ImageIcon("src\\main\\resources\\saper\\buttonAccept.png"));
+        JButton acceptButton = new JButton(new ImageIcon("src\\main\\resources\\saper\\buttonAccept.png"));
         acceptButton.setBounds(10, 100, 400, 40);
         acceptButton.setText("ACCEPT GAME");
         acceptButton.setHorizontalTextPosition(JLabel.CENTER);
@@ -135,13 +133,12 @@ public class jFrameController {
     }
 
 private JButton topScoreButton(){
-    topScoreButton = new JButton(new ImageIcon("src\\main\\resources\\saper\\buttonAccept.png"));
+    JButton topScoreButton = new JButton(new ImageIcon("src\\main\\resources\\saper\\buttonAccept.png"));
     topScoreButton.setBounds(420, 165, 100, 40);
     topScoreButton.setText("TOP 100");
     topScoreButton.setHorizontalTextPosition(JLabel.CENTER);
     topScoreButton.setVerticalTextPosition(JLabel.CENTER);
     topScoreButton.addActionListener(actionEvent -> {
-        JTopScoreFrame a = new JTopScoreFrame();
     });
         return topScoreButton;
     }
