@@ -141,6 +141,8 @@ private JButton topScoreButton(){
     topScoreButton.setHorizontalTextPosition(JLabel.CENTER);
     topScoreButton.setVerticalTextPosition(JLabel.CENTER);
     topScoreButton.addActionListener(actionEvent -> {
+        JTopScoreFrame top100 = new JTopScoreFrame();
+
     });
         return topScoreButton;
     }
