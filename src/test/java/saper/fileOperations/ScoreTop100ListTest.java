@@ -12,13 +12,13 @@ class ScoreTop100ListTest {
     @Test
     void saveReadObjectsWorkCorrectly(){
         a = new ScoreTop100List();
-        a.add(new ScoreObject("bobek", new DateTime(),2345, "1000",5,5,5));
-        a.add(new ScoreObject("matned", new DateTime(),9999, "1000",5,5,5));
+        a.add(new ScoreObject("bobek", new DateTime(),100, "3600",100,100,40));
+        a.add(new ScoreObject("matned", new DateTime(),475, "135",50,20,60));
         a.add(new ScoreObject("dupa", new DateTime(),31, "1000",5,5,5));
         a.save();
         ScoreTop100List b = new ScoreTop100List();
         b.read();
-        assertEquals( ((ScoreObject) a.get().get(0)).getScore() , 9999);
+        assertEquals( ((ScoreObject) a.get().get(0)).getScore() , 475);
     }
 
     @Test
