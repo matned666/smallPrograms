@@ -6,7 +6,7 @@ public class Points {
         int numberOfFields = numberOfColumns*numberOfRows;
         if(numberOfBombs == numberOfFields) return 0;
         else {
-            return ((numberOfFields*numberOfBombs)-time);
+            return (numberOfBombs/(numberOfFields/100)*100-time/100);
         }
     }
 }

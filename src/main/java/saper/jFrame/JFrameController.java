@@ -55,14 +55,14 @@ public class JFrameController {
     private Component chooseXSizeFieldJLabel() {
         JLabel chooseXSizeFieldJLabel = new JLabel();
         chooseXSizeFieldJLabel.setBounds(10, 25, 120, 30);
-        chooseXSizeFieldJLabel.setText("X size:");
+        chooseXSizeFieldJLabel.setText("Columns no.(max 70):");
         return chooseXSizeFieldJLabel;
     }
 
    private Component chooseYSizeFieldJLabel() {
        JLabel chooseYSizeFieldJLabel = new JLabel();
        chooseYSizeFieldJLabel.setBounds(150, 25, 120, 30);
-       chooseYSizeFieldJLabel.setText("Y size:");
+       chooseYSizeFieldJLabel.setText("Rows no.(max 35):");
         return chooseYSizeFieldJLabel;
     }
 
@@ -116,16 +116,28 @@ public class JFrameController {
         acceptButton.setVerticalTextPosition(JLabel.CENTER);
         acceptButton.addActionListener(actionEvent -> {
             try {
+
+                if((Integer.parseInt(chooseXSizeField.getText())*Integer.parseInt(chooseYSizeField.getText())) <= Integer.parseInt(chooseNumberOfBombs.getText())){
+                    System.out.println("fields:"+Integer.parseInt(chooseXSizeField.getText())*Integer.parseInt(chooseYSizeField.getText()));
+                    System.out.println("bombs:"+Integer.parseInt(chooseNumberOfBombs.getText()));
+                    throw new TooMuchBombsException();
+                }
+                if(Integer.parseInt(chooseXSizeField.getText()) > 70 || Integer.parseInt(chooseYSizeField.getText()) > 35){
+                    throw new TooBigFieldException();
+                }
+
                 JMatrix matrix = new JMatrix(Integer.parseInt(chooseXSizeField.getText()), Integer.parseInt(chooseYSizeField.getText()), Integer.parseInt(chooseNumberOfBombs.getText()));
                 name = writeYourName.getText();
                 matrix.getMatrix().setPlayerRandomName(name);
 
 
-                if(Integer.parseInt(chooseXSizeField.getText())*Integer.parseInt(chooseYSizeField.getText()) >= Integer.parseInt(chooseNumberOfBombs.getText())){
-                    throw new TooMuchBombsException();
-                }
+
+
             } catch (TooMuchBombsException ex2){
                 firstWindowMessage.setText("More bombs than fields, try again:");
+
+        }  catch (TooBigFieldException ex2){
+                firstWindowMessage.setText("Too large field, try to fit in 70 columns and 35 rows:");
 
         } catch (Exception ex) {
                 firstWindowMessage.setText("Input CORRECT parameters of your game:");
@@ -153,16 +165,27 @@ private JButton topScoreButton(){
             public void keyTyped(KeyEvent e) {
                 if (e.getKeyChar() == 10) {
                     try {
+
+                        if((Integer.parseInt(chooseXSizeField.getText())*Integer.parseInt(chooseYSizeField.getText())) <= Integer.parseInt(chooseNumberOfBombs.getText())){
+                            System.out.println("fields:"+Integer.parseInt(chooseXSizeField.getText())*Integer.parseInt(chooseYSizeField.getText()));
+                            System.out.println("bombs:"+Integer.parseInt(chooseNumberOfBombs.getText()));
+                            throw new TooMuchBombsException();
+                        }
+                        if(Integer.parseInt(chooseXSizeField.getText()) > 70 || Integer.parseInt(chooseYSizeField.getText()) > 35){
+                            throw new TooBigFieldException();
+                        }
+
                         JMatrix matrix = new JMatrix(Integer.parseInt(chooseXSizeField.getText()), Integer.parseInt(chooseYSizeField.getText()), Integer.parseInt(chooseNumberOfBombs.getText()));
                         name = writeYourName.getText();
                         matrix.getMatrix().setPlayerRandomName(name);
 
 
-                        if(Integer.parseInt(chooseXSizeField.getText())*Integer.parseInt(chooseYSizeField.getText()) >= Integer.parseInt(chooseNumberOfBombs.getText())){
-                        throw new TooMuchBombsException();
-                        }
+
                     } catch (TooMuchBombsException ex2){
                         firstWindowMessage.setText("More bombs than fields, try again:");
+                    }  catch (TooBigFieldException ex2){
+                        firstWindowMessage.setText("Too large field, try to fit in 70 columns and 35 rows:");
+
                     } catch (Exception ex) {
                         firstWindowMessage.setText("Input CORRECT parameters of your game:");
                     }
