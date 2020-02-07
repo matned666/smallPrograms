@@ -8,7 +8,7 @@ public class Main {
 
     public static void main(String[] args) {
 
-        JMatrix matrix = new JMatrix(35,17);
+        JMatrix matrix = new JMatrix(88,43);
     }
 }
 

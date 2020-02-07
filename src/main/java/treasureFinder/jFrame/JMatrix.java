@@ -10,6 +10,7 @@ public class JMatrix {
     private LabirynthGenerator mazeGen;
     private JField[][] jMatrix;
     private JFrame frame;
+    private final int FIELD_SIZE = 20;
 
     private int col;
     private int row;
@@ -39,7 +40,7 @@ public class JMatrix {
         for(int i = 0;i< jMatrix.length;i++){
             for(int j = 0;j<jMatrix[i].length;j++){
                 jMatrix[i][j] = new JField(mazeGen.getMatrix()[i][j]);
-                jMatrix[i][j].getLabel().setBounds(j*50+10,i*50+10,50,50);
+                jMatrix[i][j].getLabel().setBounds(j*FIELD_SIZE+10,i*FIELD_SIZE+10,FIELD_SIZE,FIELD_SIZE);
                 frame.add(jMatrix[i][j].getLabel());
             }
         }

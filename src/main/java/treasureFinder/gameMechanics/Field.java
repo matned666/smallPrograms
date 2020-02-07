@@ -8,6 +8,7 @@ public class Field {
     private boolean rightNeighbour;
     private boolean leftNeighbour;
     private boolean isHidden;
+    private boolean isFirst = false;
 
     public Field(boolean isOpen, boolean topNeighbour, boolean bottomNeighbour, boolean rightNeighbour, boolean leftNeighbour) {
         this.isOpen = isOpen;
@@ -16,6 +17,14 @@ public class Field {
         this.rightNeighbour = rightNeighbour;
         this.leftNeighbour = leftNeighbour;
         this.isHidden = true;
+    }
+
+    public boolean isFirst() {
+        return isFirst;
+    }
+
+    public void setFirst(boolean first) {
+        isFirst = first;
     }
 
     public boolean isHidden() {

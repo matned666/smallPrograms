@@ -52,6 +52,7 @@ public class LabirynthGenerator {
             }
         }
         matrix[startPosY][startPosX] = new Field(true,false,false,false,false);
+        matrix[startPosY][startPosX].setFirst(true);
         generateInner(startPosY, startPosX);
     }
 
@@ -68,6 +69,7 @@ public class LabirynthGenerator {
                         openFields++;
                     }
                     generateInner(y - 1, x);
+
                 } else if (randomDirection > 25 && randomDirection <= 50 && (x + 1) < matrix[y].length) {
                     if (!matrix[y][x + 1].isOpen()) {
                         matrix[y][x].setRightNeighbour(true);
@@ -98,7 +100,7 @@ public class LabirynthGenerator {
 
             }
         }catch(StackOverflowError ex){
-            System.out.println("StackOverflow");
+            System.out.println(" * StackOverflow * ");
         }
     }
 
