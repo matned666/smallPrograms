@@ -70,7 +70,6 @@ class LabirynthGeneratorTest {
         System.out.println("x:"+matrix.getStartPosX());
         System.out.println("y:"+matrix.getStartPosY());
         System.out.println("StartPos:"+matrix.getStartPos());
-        System.out.println("counter:"+matrix.counter);
         assertEquals(matrix.getStartPosX(), 5);
         assertEquals(matrix.getStartPosY(), 4);
     }

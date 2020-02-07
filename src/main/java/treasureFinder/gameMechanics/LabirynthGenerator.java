@@ -8,10 +8,9 @@ public class LabirynthGenerator {
     private int startPos;
     private int startPosX;
     private int startPosY;
-    int numberOfFields;
-    int openFields = 1;
+    private int numberOfFields;
+    private int openFields = 1;
 
-    public int counter;
 
     public LabirynthGenerator(int col, int row) {
         this.row = row;
@@ -33,15 +32,15 @@ public class LabirynthGenerator {
         return matrix;
     }
 
-    public int getStartPosX() {
+    int getStartPosX() {
         return startPosX;
     }
 
-    public int getStartPosY() {
+    int getStartPosY() {
         return startPosY;
     }
 
-    public void setStartPos(int startPos) {
+    void setStartPos(int startPos) {
         this.startPos = startPos;
         getStartPositionIndex();
     }
@@ -59,7 +58,7 @@ public class LabirynthGenerator {
     private void generateInner(int y, int x) {
         try {
             int randomDirection = (int) (Math.random() * (100)) + 1;
-            if (openFields < numberOfFields/1.5) {
+            if (openFields < (numberOfFields-10)) {
                 if (randomDirection <= 25 && (y - 1) >= 0) {
                     if (!matrix[y - 1][x].isOpen()) {
 

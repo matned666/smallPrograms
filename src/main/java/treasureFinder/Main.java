@@ -2,12 +2,13 @@ package treasureFinder;
 
 import treasureFinder.gameMechanics.Field;
 import treasureFinder.gameMechanics.LabirynthGenerator;
+import treasureFinder.jFrame.JMatrix;
 
 public class Main {
 
     public static void main(String[] args) {
 
-        LabirynthGenerator maze = new LabirynthGenerator(100,10);
+        JMatrix matrix = new JMatrix(35,17);
     }
 }
 

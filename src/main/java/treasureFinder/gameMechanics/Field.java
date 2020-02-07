@@ -7,6 +7,7 @@ public class Field {
     private boolean bottomNeighbour;
     private boolean rightNeighbour;
     private boolean leftNeighbour;
+    private boolean isHidden;
 
     public Field(boolean isOpen, boolean topNeighbour, boolean bottomNeighbour, boolean rightNeighbour, boolean leftNeighbour) {
         this.isOpen = isOpen;
@@ -14,6 +15,15 @@ public class Field {
         this.bottomNeighbour = bottomNeighbour;
         this.rightNeighbour = rightNeighbour;
         this.leftNeighbour = leftNeighbour;
+        this.isHidden = true;
+    }
+
+    public boolean isHidden() {
+        return isHidden;
+    }
+
+    public void setHidden(boolean hidden) {
+        isHidden = hidden;
     }
 
     public boolean isOpen() {
