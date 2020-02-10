@@ -61,7 +61,7 @@ public class LabirynthGenerator {
             int randomDirection = (int) (Math.random() * (100)) + 1;
             if (openFields < (numberOfFields-10)) {
                 if (randomDirection <= 25 && (y - 1) >= 0) {
-                    if (!matrix[y - 1][x].isOpen()) {
+                    if (matrix[y - 1][x].isOpened()) {
 
                         matrix[y][x].setTopNeighbour(true);
                         matrix[y - 1][x].setBottomNeighbour(true);
@@ -71,7 +71,7 @@ public class LabirynthGenerator {
                     generateInner(y - 1, x);
 
                 } else if (randomDirection > 25 && randomDirection <= 50 && (x + 1) < matrix[y].length) {
-                    if (!matrix[y][x + 1].isOpen()) {
+                    if (matrix[y][x + 1].isOpened()) {
                         matrix[y][x].setRightNeighbour(true);
                         matrix[y][x + 1].setLeftNeighbour(true);
                         matrix[y][x + 1].setOpen(true);
@@ -79,7 +79,7 @@ public class LabirynthGenerator {
                     }
                     generateInner(y, x + 1);
                 } else if (randomDirection > 50 && randomDirection <= 75 && (y + 1) < matrix.length) {
-                    if (!matrix[y + 1][x].isOpen()) {
+                    if (matrix[y + 1][x].isOpened()) {
                         matrix[y][x].setBottomNeighbour(true);
                         matrix[y + 1][x].setTopNeighbour(true);
                         matrix[y + 1][x].setOpen(true);
@@ -87,7 +87,7 @@ public class LabirynthGenerator {
                     }
                     generateInner(y + 1, x);
                 } else if (randomDirection > 75 && randomDirection <= 100 && (x - 1) >= 0) {
-                    if (!matrix[y][x - 1].isOpen()) {
+                    if (matrix[y][x - 1].isOpened()) {
                         matrix[y][x].setLeftNeighbour(true);
                         matrix[y][x - 1].setRightNeighbour(true);
                         matrix[y][x - 1].setOpen(true);
@@ -109,7 +109,7 @@ public class LabirynthGenerator {
         startPos = (int) (Math.random() * (col * row)) + 1;
     }
 
-    public int getStartPos(){
+    int getStartPos(){
         return startPos;
     }
 
@@ -127,7 +127,7 @@ public class LabirynthGenerator {
 
     }
 
-    public void printMaze(){
+    private void printMaze(){
         for (int i = 0; i < matrix.length; i++) {
             for (int j = 0; j < matrix[0].length; j++) {
                 if(i == startPosY && j == startPosX) System.out.print("@");

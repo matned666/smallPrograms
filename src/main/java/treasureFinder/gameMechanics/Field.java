@@ -1,5 +1,7 @@
 package treasureFinder.gameMechanics;
 
+import treasureFinder.jFrame.FieldTypeByEntrance;
+
 public class Field {
 
     private boolean isOpen;
@@ -10,7 +12,7 @@ public class Field {
     private boolean isHidden;
     private boolean isFirst = false;
 
-    public Field(boolean isOpen, boolean topNeighbour, boolean bottomNeighbour, boolean rightNeighbour, boolean leftNeighbour) {
+    Field(boolean isOpen, boolean topNeighbour, boolean bottomNeighbour, boolean rightNeighbour, boolean leftNeighbour) {
         this.isOpen = isOpen;
         this.topNeighbour = topNeighbour;
         this.bottomNeighbour = bottomNeighbour;
@@ -23,7 +25,7 @@ public class Field {
         return isFirst;
     }
 
-    public void setFirst(boolean first) {
+    void setFirst(boolean first) {
         isFirst = first;
     }
 
@@ -35,11 +37,11 @@ public class Field {
         isHidden = hidden;
     }
 
-    public boolean isOpen() {
-        return isOpen;
+    boolean isOpened() {
+        return !isOpen;
     }
 
-    public void setOpen(boolean open) {
+    void setOpen(boolean open) {
         isOpen = open;
     }
 
@@ -47,7 +49,7 @@ public class Field {
         return topNeighbour;
     }
 
-    public void setTopNeighbour(boolean topNeighbour) {
+    void setTopNeighbour(boolean topNeighbour) {
         this.topNeighbour = topNeighbour;
     }
 
@@ -55,7 +57,7 @@ public class Field {
         return bottomNeighbour;
     }
 
-    public void setBottomNeighbour(boolean bottomNeighbour) {
+    void setBottomNeighbour(boolean bottomNeighbour) {
         this.bottomNeighbour = bottomNeighbour;
     }
 
@@ -63,7 +65,7 @@ public class Field {
         return rightNeighbour;
     }
 
-    public void setRightNeighbour(boolean rightNeighbour) {
+    void setRightNeighbour(boolean rightNeighbour) {
         this.rightNeighbour = rightNeighbour;
     }
 
@@ -71,7 +73,7 @@ public class Field {
         return leftNeighbour;
     }
 
-    public void setLeftNeighbour(boolean leftNeighbour) {
+    void setLeftNeighbour(boolean leftNeighbour) {
         this.leftNeighbour = leftNeighbour;
     }
 
@@ -93,5 +95,24 @@ public class Field {
         else if(rightNeighbour) return "\u257A";
         else if(leftNeighbour) return "\u2578";
         else return ".";
+    }
+
+    public FieldTypeByEntrance toFieldTypeByEntrance() {
+        if(topNeighbour && bottomNeighbour && rightNeighbour && leftNeighbour) return FieldTypeByEntrance.TOP_BOTTOM_RIGHT_LEFT;
+        else if(topNeighbour && bottomNeighbour && rightNeighbour ) return FieldTypeByEntrance.TOP_BOTTOM_RIGHT;
+        else if(topNeighbour && bottomNeighbour && leftNeighbour) return FieldTypeByEntrance.TOP_BOTTOM_LEFT;
+        else if(topNeighbour && rightNeighbour && leftNeighbour) return FieldTypeByEntrance.TOP_RIGHT_LEFT;
+        else if(bottomNeighbour && rightNeighbour && leftNeighbour) return FieldTypeByEntrance.BOTTOM_RIGHT_LEFT;
+        else if(topNeighbour && bottomNeighbour ) return FieldTypeByEntrance.TOP_BOTTOM;
+        else if(topNeighbour && leftNeighbour) return FieldTypeByEntrance.TOP_LEFT;
+        else if(topNeighbour && rightNeighbour) return FieldTypeByEntrance.TOP_RIGHT;
+        else if(bottomNeighbour && rightNeighbour) return FieldTypeByEntrance.BOTTOM_RIGHT;
+        else if(bottomNeighbour && leftNeighbour) return FieldTypeByEntrance.BOTTOM_LEFT;
+        else if(rightNeighbour && leftNeighbour) return FieldTypeByEntrance.LEFT_RIGHT;
+        else if(topNeighbour ) return FieldTypeByEntrance.TOP;
+        else if(bottomNeighbour) return FieldTypeByEntrance.BOTTOM;
+        else if(rightNeighbour) return FieldTypeByEntrance.RIGHT;
+        else if(leftNeighbour) return FieldTypeByEntrance.LEFT;
+        else return FieldTypeByEntrance.NO_ENTRIES;
     }
 }
