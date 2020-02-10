@@ -4,60 +4,72 @@ import treasureFinder.gameMechanics.Field;
 
 import javax.swing.*;
 
-public class JField {
+class JField {
 
     private JLabel label;
-//    private boolean isTreasureHere;
-//    private boolean isHeroHere;
     private Field fieldData;
 
-    public JField(Field fieldData) {
+    JField(Field fieldData) {
         this.fieldData = fieldData;
         getImageLabel();
     }
 
-    public JLabel getLabel() {
+    JLabel getLabel() {
         return label;
     }
 
-    public void getImageLabel() {
+    private void getImageLabel() {
         label = new JLabel();
-        if(fieldData.isFirst())  label.setIcon(new ImageIcon("src\\main\\resources\\treasureHunter\\img\\firstField.jpg"));
-        else {
-        
-            if (fieldData.isTopNeighbour() && fieldData.isRightNeighbour() && fieldData.isBottomNeighbour() && fieldData.isLeftNeighbour())
+        switch(fieldData.toFieldTypeByEntrance()){
+            case TOP_BOTTOM_RIGHT_LEFT:
                 label.setIcon(new ImageIcon("src\\main\\resources\\treasureHunter\\img\\TRLB.jpg"));
-            else if (fieldData.isTopNeighbour() && fieldData.isRightNeighbour() && !fieldData.isBottomNeighbour() && fieldData.isLeftNeighbour())
-                label.setIcon(new ImageIcon("src\\main\\resources\\treasureHunter\\img\\TLR.jpg"));
-            else if (fieldData.isTopNeighbour() && !fieldData.isRightNeighbour() && fieldData.isBottomNeighbour() && fieldData.isLeftNeighbour())
+                break;
+            case TOP_BOTTOM_LEFT:
                 label.setIcon(new ImageIcon("src\\main\\resources\\treasureHunter\\img\\TLB.jpg"));
-            else if (fieldData.isTopNeighbour() && fieldData.isRightNeighbour() && fieldData.isBottomNeighbour() && !fieldData.isLeftNeighbour())
+                break;
+            case TOP_BOTTOM_RIGHT:
                 label.setIcon(new ImageIcon("src\\main\\resources\\treasureHunter\\img\\TRB.jpg"));
-            else if (!fieldData.isTopNeighbour() && fieldData.isRightNeighbour() && fieldData.isBottomNeighbour() && fieldData.isLeftNeighbour())
+                break;
+            case TOP_RIGHT_LEFT:
+                label.setIcon(new ImageIcon("src\\main\\resources\\treasureHunter\\img\\TLR.jpg"));
+                break;
+            case BOTTOM_RIGHT_LEFT:
                 label.setIcon(new ImageIcon("src\\main\\resources\\treasureHunter\\img\\RLB.jpg"));
-            else if (fieldData.isTopNeighbour() && !fieldData.isRightNeighbour() && !fieldData.isBottomNeighbour() && fieldData.isLeftNeighbour())
-                label.setIcon(new ImageIcon("src\\main\\resources\\treasureHunter\\img\\TL.jpg"));
-            else if (fieldData.isTopNeighbour() && fieldData.isRightNeighbour() && !fieldData.isBottomNeighbour() && !fieldData.isLeftNeighbour())
-                label.setIcon(new ImageIcon("src\\main\\resources\\treasureHunter\\img\\TR.jpg"));
-            else if (!fieldData.isTopNeighbour() && !fieldData.isRightNeighbour() && fieldData.isBottomNeighbour() && fieldData.isLeftNeighbour())
-                label.setIcon(new ImageIcon("src\\main\\resources\\treasureHunter\\img\\LB.jpg"));
-            else if (!fieldData.isTopNeighbour() && fieldData.isRightNeighbour() && !fieldData.isBottomNeighbour() && fieldData.isLeftNeighbour())
-                label.setIcon(new ImageIcon("src\\main\\resources\\treasureHunter\\img\\RL.jpg"));
-            else if (!fieldData.isTopNeighbour() && fieldData.isRightNeighbour() && fieldData.isBottomNeighbour() && !fieldData.isLeftNeighbour())
-                label.setIcon(new ImageIcon("src\\main\\resources\\treasureHunter\\img\\RB.jpg"));
-            else if (fieldData.isTopNeighbour() && !fieldData.isRightNeighbour() && fieldData.isBottomNeighbour() && !fieldData.isLeftNeighbour())
+                break;
+            case TOP_BOTTOM:
                 label.setIcon(new ImageIcon("src\\main\\resources\\treasureHunter\\img\\TB.jpg"));
-            else if (fieldData.isTopNeighbour() && !fieldData.isRightNeighbour() && !fieldData.isBottomNeighbour() && !fieldData.isLeftNeighbour())
+                break;
+            case TOP_LEFT:
+                label.setIcon(new ImageIcon("src\\main\\resources\\treasureHunter\\img\\TL.jpg"));
+                break;
+            case TOP_RIGHT:
+                label.setIcon(new ImageIcon("src\\main\\resources\\treasureHunter\\img\\TR.jpg"));
+                break;
+            case BOTTOM_LEFT:
+                label.setIcon(new ImageIcon("src\\main\\resources\\treasureHunter\\img\\LB.jpg"));
+                break;
+            case BOTTOM_RIGHT:
+                label.setIcon(new ImageIcon("src\\main\\resources\\treasureHunter\\img\\RB.jpg"));
+                break;
+            case LEFT_RIGHT:
+                label.setIcon(new ImageIcon("src\\main\\resources\\treasureHunter\\img\\RL.jpg"));
+                break;
+            case TOP:
                 label.setIcon(new ImageIcon("src\\main\\resources\\treasureHunter\\img\\T.jpg"));
-            else if (!fieldData.isTopNeighbour() && fieldData.isRightNeighbour() && !fieldData.isBottomNeighbour() && !fieldData.isLeftNeighbour())
-                label.setIcon(new ImageIcon("src\\main\\resources\\treasureHunter\\img\\R.jpg"));
-            else if (!fieldData.isTopNeighbour() && !fieldData.isRightNeighbour() && fieldData.isBottomNeighbour() && !fieldData.isLeftNeighbour())
-                label.setIcon(new ImageIcon("src\\main\\resources\\treasureHunter\\img\\B.jpg"));
-            else if (!fieldData.isTopNeighbour() && !fieldData.isRightNeighbour() && !fieldData.isBottomNeighbour() && fieldData.isLeftNeighbour())
+                break;
+            case LEFT:
                 label.setIcon(new ImageIcon("src\\main\\resources\\treasureHunter\\img\\L.jpg"));
-            else label.setIcon(new ImageIcon("src\\main\\resources\\treasureHunter\\img\\EMPTY.jpg"));
+                break;
+            case RIGHT:
+                label.setIcon(new ImageIcon("src\\main\\resources\\treasureHunter\\img\\R.jpg"));
+                break;
+            case BOTTOM:
+                label.setIcon(new ImageIcon("src\\main\\resources\\treasureHunter\\img\\B.jpg"));
+                break;
+            default:
+                label.setIcon(new ImageIcon("src\\main\\resources\\treasureHunter\\img\\EMPTY.jpg"));
+                break;
         }
     }
-
 
 }
