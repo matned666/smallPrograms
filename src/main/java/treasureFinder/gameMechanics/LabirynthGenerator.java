@@ -15,15 +15,17 @@ public class LabirynthGenerator {
     private int openFields = 1;
     private boolean[] roomFields;
     private boolean[] treasureFields;
-    private final int NUMBER_OF_TREASURES = (int )(Math.random()*20)+5;
-    private final int NUMBER_OF_ROOMS = (int )(Math.random()*30)+10;
+    private int NUMBER_OF_TREASURES = 5;
+    private int NUMBER_OF_ROOMS = 10;
     private final int PLAYER_BASE_HP = 5;
     private Player player;
 
 
-    public LabirynthGenerator(int col, int row) {
+    public LabirynthGenerator(int col, int row, int rooms, int treasures ) {
         this.row = row;
         this.col = col;
+        NUMBER_OF_TREASURES = treasures;
+        NUMBER_OF_ROOMS = rooms;
         matrix = new Field[row][col];
         numberOfFields = row * col;
         initialize();

@@ -8,6 +8,7 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
+import java.awt.event.WindowEvent;
 
 public class Game {
 
@@ -17,6 +18,13 @@ public class Game {
     private final int FIELD_SIZE = 20;
     private GameState gameState;
     private JLabel gameInfo;
+    private int levelNumber;
+    private int rooms;
+    private int treasures;
+
+    private final int NUMBER_OF_TREASURES = 5;
+    private final int NUMBER_OF_ROOMS = 10;
+
 
     private Field playerField;
 
@@ -26,16 +34,20 @@ public class Game {
     public Game(int col, int row) {
         this.col = col;
         this.row = row;
-        gameState = GameState.PLAYING;
-        initialize();
+        levelNumber = 1;
+        rooms = NUMBER_OF_ROOMS;
+        treasures = NUMBER_OF_TREASURES;
+        initialize(rooms, treasures);
     }
 
-    private void initialize() {
+    private void initialize( int rooms, int treasures ) {
+
+        gameState = GameState.PLAYING;
         frame = new JFrame();
         frame.setTitle("Maze hunter");
         frame.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
         frame.setSize(FIELD_SIZE * col + 35, FIELD_SIZE * row + 160);
-        initializeMatrix();
+        initializeMatrix(rooms, treasures);
         playerField = mazeGen.getMatrix()[mazeGen.getPlayer().getCol()][mazeGen.getPlayer().getRow()];
         gameInfo = new JLabel();
         gameInfo.setBounds(10,FIELD_SIZE * row + 30, FIELD_SIZE * col + 25 , 50);
@@ -45,8 +57,12 @@ public class Game {
 
 
         frame.addKeyListener(new KeyListener() {
+
+
             @Override
             public void keyTyped(KeyEvent keyEvent) {
+         if(gameState != GameState.PLAYING) gameOver();
+
                 if (keyEvent.getKeyChar() == '8' && playerField.isTopNeighbour() && gameState == GameState.PLAYING) {
                     move(1, 0);
                 } else if (keyEvent.getKeyChar() == '2' && playerField.isBottomNeighbour() && gameState == GameState.PLAYING) {
@@ -73,29 +89,53 @@ public class Game {
         frame.setVisible(true);
     }
 
+    private void gameOver() {
+        if(gameState == GameState.GAME_OVER) {
+            newGame(NUMBER_OF_ROOMS, NUMBER_OF_TREASURES);
+        }
+        if(gameState == GameState.WIN) {
+            rooms+=5;
+            treasures+=2;
+            newGame(rooms, treasures);
+            levelNumber++;
+        }
+    }
+
     private void setGameInfo(){
-        gameInfo.setText("HP:"+mazeGen.getPlayer().getHP()+" Points:"+mazeGen.getPlayer().getPoints()+" Game:"+gameState);
+        gameInfo.setText("HP:"+mazeGen.getPlayer().getHP()+" Points:"+mazeGen.getPlayer().getPoints()+"/"+treasures+" Game:"+gameState+"  level:"+levelNumber);
     }
 
     private void move(int col, int row) {
-        int colOfPlayer = mazeGen.getPlayer().getCol();
-        int rowOfPlayer = mazeGen.getPlayer().getRow();
-        mazeGen.getMatrix()[colOfPlayer][rowOfPlayer].setPlayer(false);
-        mazeGen.getMatrix()[colOfPlayer - col][rowOfPlayer - row].setPlayer(true);
-        mazeGen.getPlayer().setCol(colOfPlayer - col);
-        mazeGen.getPlayer().setRow(rowOfPlayer - row);
-        colOfPlayer = mazeGen.getPlayer().getCol();
-        rowOfPlayer = mazeGen.getPlayer().getRow();
-        jMatrix[colOfPlayer][rowOfPlayer].getImageLabel();
-        jMatrix[colOfPlayer + col][rowOfPlayer + row].getImageLabel();
-        mazeGen.getPlayer().setMovementPossibilities(mazeGen.getMatrix()[colOfPlayer][rowOfPlayer].toFieldTypeByEntrance());
-        playerField = mazeGen.getMatrix()[colOfPlayer][rowOfPlayer];
-        isRoomFound(colOfPlayer, rowOfPlayer);
-        isTreasureFound(colOfPlayer, rowOfPlayer);
-        moveAllRooms();
-        if(mazeGen.getPlayer().getHP()<= 0 ) gameState = GameState.GAME_OVER;
-        if(mazeGen.getPlayer().getPoints() >= mazeGen.getNUMBER_OF_TREASURES()) gameState = GameState.WIN;
-        setGameInfo();
+            int colOfPlayer = mazeGen.getPlayer().getCol();
+            int rowOfPlayer = mazeGen.getPlayer().getRow();
+            mazeGen.getMatrix()[colOfPlayer][rowOfPlayer].setPlayer(false);
+            mazeGen.getMatrix()[colOfPlayer - col][rowOfPlayer - row].setPlayer(true);
+            mazeGen.getPlayer().setCol(colOfPlayer - col);
+            mazeGen.getPlayer().setRow(rowOfPlayer - row);
+            colOfPlayer = mazeGen.getPlayer().getCol();
+            rowOfPlayer = mazeGen.getPlayer().getRow();
+            jMatrix[colOfPlayer][rowOfPlayer].getImageLabel();
+            jMatrix[colOfPlayer + col][rowOfPlayer + row].getImageLabel();
+            mazeGen.getPlayer().setMovementPossibilities(mazeGen.getMatrix()[colOfPlayer][rowOfPlayer].toFieldTypeByEntrance());
+            playerField = mazeGen.getMatrix()[colOfPlayer][rowOfPlayer];
+            isRoomFound(colOfPlayer, rowOfPlayer);
+            isTreasureFound(colOfPlayer, rowOfPlayer);
+            moveAllRooms();
+            if (mazeGen.getPlayer().getHP() <= 0) {
+                gameState = GameState.GAME_OVER;
+                levelNumber = 1;
+            }
+            if (mazeGen.getPlayer().getPoints() >= mazeGen.getNUMBER_OF_TREASURES()) {
+                gameState = GameState.WIN;
+            }
+        System.out.println("treasures:"+mazeGen.getNUMBER_OF_TREASURES());
+            setGameInfo();
+
+    }
+
+    private void newGame(int rooms, int treasures){
+        frame.setVisible(false);
+        initialize(rooms, treasures);
     }
 
     private void isRoomFound(int col, int row) {
@@ -141,8 +181,8 @@ public class Game {
     }
 
 
-    private void initializeMatrix() {
-        mazeGen = new LabirynthGenerator(col, row);
+    private void initializeMatrix(int rooms, int treasures) {
+        mazeGen = new LabirynthGenerator(col, row, rooms, treasures);
         jMatrix = new JField[row][col];
 
         for (int i = 0; i < jMatrix.length; i++) {
