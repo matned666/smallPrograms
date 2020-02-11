@@ -44,6 +44,10 @@ public class LabirynthGenerator {
 
     }
 
+    public int getNUMBER_OF_TREASURES() {
+        return NUMBER_OF_TREASURES;
+    }
+
     public Player getPlayer() {
         return player;
     }

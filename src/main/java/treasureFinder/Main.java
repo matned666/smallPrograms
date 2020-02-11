@@ -6,7 +6,7 @@ public class Main {
 
     public static void main(String[] args) {
 
-        Game matrix = new Game();
+        Game matrix = new Game(30,20);
     }
 }
 

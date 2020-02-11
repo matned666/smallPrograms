@@ -27,6 +27,10 @@ public class Field {
         this.isPlayer = false;
     }
 
+    public boolean isPlayer() {
+        return isPlayer;
+    }
+
     public void setPlayer(boolean player) {
         isPlayer = player;
     }
@@ -129,8 +133,8 @@ public class Field {
 
     public FieldTypeByEntrance toFieldTypeByEntrance() {
         if(isPlayer) return  FieldTypeByEntrance.PLAYER;
-        if (isTreasure) return FieldTypeByEntrance.TREASURE;
         if (isRoom) return FieldTypeByEntrance.ROOM;
+        if (isTreasure) return FieldTypeByEntrance.TREASURE;
         if (isFirst) return FieldTypeByEntrance.ENTRANCE;
         else {
             if (topNeighbour && bottomNeighbour && rightNeighbour && leftNeighbour)
