@@ -1,14 +1,13 @@
-package treasureFinder.jFrame;
+package treasureHunter.jFrame;
 
 
-import treasureFinder.gameMechanics.Field;
-import treasureFinder.gameMechanics.LabirynthGenerator;
+import treasureHunter.gameMechanics.Field;
+import treasureHunter.gameMechanics.LabirynthGenerator;
 
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
-import java.awt.event.WindowEvent;
 
 public class Game {
 
@@ -92,6 +91,8 @@ public class Game {
     private void gameOver() {
         if(gameState == GameState.GAME_OVER) {
             newGame(NUMBER_OF_ROOMS, NUMBER_OF_TREASURES);
+            levelNumber = 1;
+
         }
         if(gameState == GameState.WIN) {
             rooms+=5;
@@ -123,7 +124,6 @@ public class Game {
             moveAllRooms();
             if (mazeGen.getPlayer().getHP() <= 0) {
                 gameState = GameState.GAME_OVER;
-                levelNumber = 1;
             }
             if (mazeGen.getPlayer().getPoints() >= mazeGen.getNUMBER_OF_TREASURES()) {
                 gameState = GameState.WIN;

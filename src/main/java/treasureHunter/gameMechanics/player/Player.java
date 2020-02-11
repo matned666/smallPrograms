@@ -1,6 +1,6 @@
-package treasureFinder.gameMechanics.player;
+package treasureHunter.gameMechanics.player;
 
-import treasureFinder.jFrame.FieldTypeByEntrance;
+import treasureHunter.jFrame.FieldTypeByEntrance;
 
 public class Player {
     private FieldTypeByEntrance movementPossibilities;

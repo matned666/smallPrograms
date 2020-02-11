@@ -1,4 +1,4 @@
-package treasureFinder.jFrame;
+package treasureHunter.jFrame;
 
 public enum GameState {
     GAME_OVER,

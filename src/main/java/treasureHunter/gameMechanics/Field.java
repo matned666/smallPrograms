@@ -1,6 +1,6 @@
-package treasureFinder.gameMechanics;
+package treasureHunter.gameMechanics;
 
-import treasureFinder.jFrame.FieldTypeByEntrance;
+import treasureHunter.jFrame.FieldTypeByEntrance;
 
 public class Field {
 

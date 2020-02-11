@@ -1,6 +1,6 @@
-package treasureFinder.jFrame;
+package treasureHunter.jFrame;
 
-import treasureFinder.gameMechanics.Field;
+import treasureHunter.gameMechanics.Field;
 
 import javax.swing.*;
 

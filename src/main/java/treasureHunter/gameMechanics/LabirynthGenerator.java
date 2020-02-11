@@ -1,7 +1,7 @@
-package treasureFinder.gameMechanics;
+package treasureHunter.gameMechanics;
 
-import treasureFinder.gameMechanics.player.Player;
-import treasureFinder.jFrame.FieldTypeByEntrance;
+import treasureHunter.gameMechanics.player.Player;
+import treasureHunter.jFrame.FieldTypeByEntrance;
 
 public class LabirynthGenerator {
 
