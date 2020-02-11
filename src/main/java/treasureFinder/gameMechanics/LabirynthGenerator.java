@@ -15,8 +15,8 @@ public class LabirynthGenerator {
     private int openFields = 1;
     private boolean[] roomFields;
     private boolean[] treasureFields;
-    private final int NUMBER_OF_TREASURES = 5;
-    private final int NUMBER_OF_ROOMS = 20;
+    private final int NUMBER_OF_TREASURES = (int )(Math.random()*20)+5;
+    private final int NUMBER_OF_ROOMS = (int )(Math.random()*30)+10;
     private final int PLAYER_BASE_HP = 5;
     private Player player;
 
