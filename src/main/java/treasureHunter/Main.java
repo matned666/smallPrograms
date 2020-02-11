@@ -1,6 +1,6 @@
-package treasureFinder;
+package treasureHunter;
 
-import treasureFinder.jFrame.Game;
+import treasureHunter.jFrame.Game;
 
 public class Main {
 
