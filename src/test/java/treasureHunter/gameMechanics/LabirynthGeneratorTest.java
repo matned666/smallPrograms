@@ -1,4 +1,4 @@
-package treasureFinder.gameMechanics;
+package treasureHunter.gameMechanics;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -22,7 +22,7 @@ class LabirynthGeneratorTest {
         int highestNumber = 1;
         int lowestNumber = col*row;
         for (int i = 0; i < 10000; i++) {
-            matrix = new LabirynthGenerator(col,row);
+            matrix = new LabirynthGenerator(col,row,2,2);
             if (matrix.getStartPos() <= 0 || matrix.getStartPos() > col*row) isFitInBounds = false;
             if (highestNumber < matrix.getStartPos()) highestNumber = matrix.getStartPos();
             if (lowestNumber > matrix.getStartPos()) lowestNumber = matrix.getStartPos();
@@ -37,7 +37,7 @@ class LabirynthGeneratorTest {
         int highestNumber = 1;
         int lowestNumber = col*row;
         for (int i = 0; i < 10000; i++) {
-            matrix = new LabirynthGenerator(col,row);
+            matrix = new LabirynthGenerator(col,row,2,2);
             if (matrix.getStartPos() <= 0 || matrix.getStartPos() > col*row) isFitInBounds = false;
             if (highestNumber < matrix.getStartPos()) highestNumber = matrix.getStartPos();
             if (lowestNumber > matrix.getStartPos()) lowestNumber = matrix.getStartPos();
@@ -52,7 +52,7 @@ class LabirynthGeneratorTest {
         int highestNumber = 1;
         int lowestNumber = col*row;
         for (int i = 0; i < 10000; i++) {
-            matrix = new LabirynthGenerator(col,row);
+            matrix = new LabirynthGenerator(col,row,2,2);
             if (matrix.getStartPos() <= 0 || matrix.getStartPos() > col*row) isFitInBounds = false;
             if (highestNumber < matrix.getStartPos()) highestNumber = matrix.getStartPos();
             if (lowestNumber > matrix.getStartPos()) lowestNumber = matrix.getStartPos();
@@ -63,7 +63,7 @@ class LabirynthGeneratorTest {
 
     @Test
     void isStartPositionPlacedWellOnMatrix(){
-        matrix = new LabirynthGenerator(6,5);
+        matrix = new LabirynthGenerator(6,5,2,2);
         matrix.setStartPos(30);
         System.out.println("matrix.length:"+matrix.getMatrix().length);
         System.out.println("matrix[0].length:"+matrix.getMatrix()[0].length);

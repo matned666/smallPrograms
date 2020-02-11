@@ -40,7 +40,6 @@ public class Game {
     }
 
     private void initialize( int rooms, int treasures ) {
-
         gameState = GameState.PLAYING;
         frame = new JFrame();
         frame.setTitle("Maze hunter");
@@ -53,15 +52,10 @@ public class Game {
         gameInfo.setFont(new Font("Arial", Font.BOLD,20));
         gameInfo.setText("Let's start");
         frame.add(gameInfo);
-
-
         frame.addKeyListener(new KeyListener() {
-
-
             @Override
             public void keyTyped(KeyEvent keyEvent) {
-         if(gameState != GameState.PLAYING) gameOver();
-
+                if(gameState != GameState.PLAYING) gameOver();
                 if (keyEvent.getKeyChar() == '8' && playerField.isTopNeighbour() && gameState == GameState.PLAYING) {
                     move(1, 0);
                 } else if (keyEvent.getKeyChar() == '2' && playerField.isBottomNeighbour() && gameState == GameState.PLAYING) {
@@ -74,16 +68,13 @@ public class Game {
                     move(0, 0);
                 }
             }
-
             @Override
             public void keyPressed(KeyEvent keyEvent) {
             }
-
             @Override
             public void keyReleased(KeyEvent keyEvent) {
             }
         });
-
         frame.setLayout(null);
         frame.setVisible(true);
     }
@@ -92,7 +83,6 @@ public class Game {
         if(gameState == GameState.GAME_OVER) {
             newGame(NUMBER_OF_ROOMS, NUMBER_OF_TREASURES);
             levelNumber = 1;
-
         }
         if(gameState == GameState.WIN) {
             rooms+=5;
@@ -103,7 +93,7 @@ public class Game {
     }
 
     private void setGameInfo(){
-        gameInfo.setText("HP:"+mazeGen.getPlayer().getHP()+" Points:"+mazeGen.getPlayer().getPoints()+"/"+treasures+" Game:"+gameState+"  level:"+levelNumber);
+        gameInfo.setText("HP:"+mazeGen.getPlayer().getHP()+" Treasure:"+mazeGen.getPlayer().getPoints()+"/"+treasures+" Game:"+gameState+"  level:"+levelNumber);
     }
 
     private void move(int col, int row) {
@@ -128,7 +118,6 @@ public class Game {
             if (mazeGen.getPlayer().getPoints() >= mazeGen.getNUMBER_OF_TREASURES()) {
                 gameState = GameState.WIN;
             }
-        System.out.println("treasures:"+mazeGen.getNUMBER_OF_TREASURES());
             setGameInfo();
 
     }
