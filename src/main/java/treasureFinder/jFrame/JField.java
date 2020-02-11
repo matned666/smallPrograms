@@ -11,6 +11,7 @@ class JField {
 
     JField(Field fieldData) {
         this.fieldData = fieldData;
+        label = new JLabel();
         getImageLabel();
     }
 
@@ -18,10 +19,21 @@ class JField {
         return label;
     }
 
-    private void getImageLabel() {
-        label = new JLabel();
+    void getImageLabel() {
         switch(fieldData.toFieldTypeByEntrance()){
-            case TOP_BOTTOM_RIGHT_LEFT:
+            case PLAYER:
+                label.setIcon(new ImageIcon("src\\main\\resources\\treasureHunter\\img\\Player.jpg"));
+                break;
+                case ROOM:
+                label.setIcon(new ImageIcon("src\\main\\resources\\treasureHunter\\img\\Room.jpg"));
+                break;
+            case ENTRANCE:
+                label.setIcon(new ImageIcon("src\\main\\resources\\treasureHunter\\img\\Entrance.jpg"));
+                break;
+            case TREASURE:
+                label.setIcon(new ImageIcon("src\\main\\resources\\treasureHunter\\img\\Treasure.jpg"));
+                break;
+                case TOP_BOTTOM_RIGHT_LEFT:
                 label.setIcon(new ImageIcon("src\\main\\resources\\treasureHunter\\img\\TRLB.jpg"));
                 break;
             case TOP_BOTTOM_LEFT:
@@ -66,7 +78,9 @@ class JField {
             case BOTTOM:
                 label.setIcon(new ImageIcon("src\\main\\resources\\treasureHunter\\img\\B.jpg"));
                 break;
-            default:
+
+
+                default:
                 label.setIcon(new ImageIcon("src\\main\\resources\\treasureHunter\\img\\EMPTY.jpg"));
                 break;
         }

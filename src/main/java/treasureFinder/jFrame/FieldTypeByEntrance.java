@@ -17,6 +17,11 @@ public enum FieldTypeByEntrance {
     BOTTOM,
     LEFT,
     RIGHT,
-    NO_ENTRIES
+    NO_ENTRIES,
+    ROOM,
+    ENTRANCE,
+    TREASURE,
+    PLAYER
+
 
 }
