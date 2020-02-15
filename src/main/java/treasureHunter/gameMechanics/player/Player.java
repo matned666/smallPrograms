@@ -14,10 +14,6 @@ public class Player {
         this.points = 0;
     }
 
-    public FieldTypeByEntrance getMovementPossibilities() {
-        return movementPossibilities;
-    }
-
     public void setMovementPossibilities(FieldTypeByEntrance movementPossibilities) {
         this.movementPossibilities = movementPossibilities;
     }

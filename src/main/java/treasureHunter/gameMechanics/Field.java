@@ -52,7 +52,7 @@ public class Field {
     }
 
     boolean isOpened() {
-        return !isOpen;
+        return isOpen;
     }
 
     void setOpen(boolean open) {
