@@ -1,7 +1,7 @@
 package treasureHunter.gameMechanics;
 
 import treasureHunter.gameMechanics.player.Player;
-import treasureHunter.jFrame.FieldTypeByEntrance;
+import treasureHunter.jFrame.FieldType;
 
 public class MazeMatrix {
 
@@ -24,9 +24,11 @@ public class MazeMatrix {
     private int openFields = 1;
     private boolean[] monsterFields;
     private boolean[] treasureFields;
+    private boolean isStackOverFlowError;
 
     // constructor and initializer
     public MazeMatrix(int column, int row, int rooms, int treasures ) {
+        isStackOverFlowError = false;
         this.row = row;
         this.column = column;
         NUMBER_OF_TREASURES = treasures;
@@ -50,6 +52,11 @@ public class MazeMatrix {
     }
 
     // getters and setters
+
+    boolean isStackOverFlowError() {
+        return isStackOverFlowError;
+    }
+
     public int getNUMBER_OF_TREASURES() {
         return NUMBER_OF_TREASURES;
     }
@@ -94,6 +101,39 @@ public class MazeMatrix {
     }
 
     // generators  - maze and fields
+    private void generateStartPosition() {
+        startPosition = (int) (Math.random() * (column * row)) + 1;
+        getStartPositionIndex();
+    }
+
+    private void generateMonsterLocations() {
+        monsterFields = new boolean[numberOfFields];
+        generateLocationsInner(NUMBER_OF_MONSTERS, monsterFields);
+        int temp = 0;
+        for (int i = 0; i < matrix.length; i++) {
+            for (int j = 0; j < matrix[i].length; j++) {
+                if (monsterFields[temp] && matrix[i][j].toFieldTypeByEntrance() != FieldType.NO_ENTRIES)
+                    matrix[i][j].setMonster(true);
+                temp++;
+            }
+        }
+    }
+
+    private void generateTreasureLocations() {
+        treasureFields = new boolean[numberOfFields];
+        generateLocationsInner(NUMBER_OF_TREASURES, treasureFields);
+        int temp = 0;
+        for (int i = 0; i < matrix.length; i++) {
+            for (int j = 0; j < matrix[i].length; j++) {
+                if (treasureFields[temp]) {
+                    if (matrix[i][j].isOpened()) matrix[i][j].setTreasure(true);
+                        else NUMBER_OF_TREASURES --;
+                }
+                temp++;
+            }
+        }
+    }
+
     private void generateLocationsInner(int numberOfElements, boolean[] elementFields) {
         for (boolean el : elementFields) el = false;
         int temp;
@@ -107,98 +147,64 @@ public class MazeMatrix {
         }
     }
 
-    private void generateMonsterLocations() {
-        monsterFields = new boolean[numberOfFields];
-        generateLocationsInner(NUMBER_OF_MONSTERS, monsterFields);
-        int temp = 0;
+    private void generateMaze() {
         for (int i = 0; i < matrix.length; i++) {
-            for (int j = 0; j < matrix[i].length; j++) {
-                if (monsterFields[temp] && matrix[i][j].toFieldTypeByEntrance() != FieldTypeByEntrance.NO_ENTRIES)
-                    matrix[i][j].setRoom(true);
-                temp++;
+            for (int j = 0; j < matrix[0].length; j++) {
+                matrix[i][j] = new Field();
             }
         }
+        matrix[startPositionRow][startPositionColumn] = new Field();
+        matrix[startPositionRow][startPositionColumn].setOpen(true);
+        matrix[startPositionRow][startPositionColumn].setFirst(true);
+        generateMazeInner(startPositionRow, startPositionColumn);
     }
 
-    private void generateTreasureLocations() {
-        treasureFields = new boolean[numberOfFields];
-        generateLocationsInner(NUMBER_OF_TREASURES, treasureFields);
-        int temp = 0;
-        for (int i = 0; i < matrix.length; i++) {
-            for (int j = 0; j < matrix[i].length; j++) {
-                if (treasureFields[temp]) {
-                        matrix[i][j].setTreasure(true);
-                    if (!matrix[i][j].isOpened()) {
-                        generateInner(i,j,false);
-                        matrix[i][j].setOpen(true);
-                    }
-                }
-                temp++;
-            }
-        }
-    }
-
-    private void generateInner(int y, int x, boolean isCorrection) {
+    private void generateMazeInner(int y, int x) {
         try {
             int randomDirection = (int) (Math.random() * (100)) + 1;
             if (openFields < (numberOfFields - 10)) {
                 if (randomDirection <= 25 && (y - 1) >= 0) {
-                    if (!matrix[y - 1][x].isOpened()) {
-                        matrix[y][x].setTopNeighbour(true);
-                        matrix[y - 1][x].setBottomNeighbour(true);
-                        matrix[y - 1][x].setOpen(true);
-                        openFields++;
-                    }
-                    generateInner(y - 1, x, isCorrection);
-
+                    generateMazeInnerStatements(y,x,-1,0);
                 } else if (randomDirection > 25 && randomDirection <= 50 && (x + 1) < matrix[y].length) {
-                    if (!matrix[y][x + 1].isOpened()) {
-                        matrix[y][x].setRightNeighbour(true);
-                        matrix[y][x + 1].setLeftNeighbour(true);
-                        matrix[y][x + 1].setOpen(true);
-                        openFields++;
-                    }
-                    generateInner(y, x + 1, isCorrection);
+                    generateMazeInnerStatements(y,x,0,1);
                 } else if (randomDirection > 50 && randomDirection <= 75 && (y + 1) < matrix.length) {
-                    if (!matrix[y + 1][x].isOpened()) {
-                        matrix[y][x].setBottomNeighbour(true);
-                        matrix[y + 1][x].setTopNeighbour(true);
-                        matrix[y + 1][x].setOpen(true);
-                        openFields++;
-                    }
-                    generateInner(y + 1, x, isCorrection);
+                    generateMazeInnerStatements(y,x,1,0);
                 } else if (randomDirection > 75 && randomDirection <= 100 && (x - 1) >= 0) {
-                    if (!matrix[y][x - 1].isOpened()) {
-                        matrix[y][x].setLeftNeighbour(true);
-                        matrix[y][x - 1].setRightNeighbour(true);
-                        matrix[y][x - 1].setOpen(true);
-                        openFields++;
-                    }
-                     generateInner(y, x - 1, isCorrection);
+                    generateMazeInnerStatements(y,x,0,-1);
                 } else {
-                    generateInner(y, x, isCorrection);
+                    generateMazeInner(y, x);
                 }
-
             }
         } catch (StackOverflowError ex) {
-            System.out.println(" * StackOverflow * ");
+            isStackOverFlowError = true;
+            System.out.println(" StackOverflow ");
         }
     }
 
-    private void generateStartPosition() {
-        startPosition = (int) (Math.random() * (column * row)) + 1;
-        getStartPositionIndex();
-    }
-
-    private void generateMaze() {
-        for (int i = 0; i < matrix.length; i++) {
-            for (int j = 0; j < matrix[0].length; j++) {
-                matrix[i][j] = new Field(false, false, false, false, false);
+    private void generateMazeInnerStatements(int y, int x, int yC, int xC){
+        if (!matrix[y + yC][x + xC].isOpened()) {
+            if(yC == -1 && xC == 0) {
+                matrix[y][x].setTopNeighbour(true);
+                matrix[y + yC][x + xC].setBottomNeighbour(true);
             }
+            if(yC == 1 && xC == 0) {
+                matrix[y][x].setBottomNeighbour(true);
+                matrix[y + yC][x + xC].setTopNeighbour(true);
+            }
+            if(yC == 0 && xC == 1) {
+                matrix[y][x].setRightNeighbour(true);
+                matrix[y + yC][x + xC].setLeftNeighbour(true);
+            }
+            if(yC == 0 && xC == -1) {
+                matrix[y][x].setLeftNeighbour(true);
+                matrix[y + yC][x + xC].setRightNeighbour(true);
+            }
+            matrix[y + yC][x + xC].setOpen(true);
+            openFields++;
         }
-        matrix[startPositionRow][startPositionColumn] = new Field(true, false, false, false, false);
-        matrix[startPositionRow][startPositionColumn].setFirst(true);
-        generateInner(startPositionRow, startPositionColumn, false);
+
+            generateMazeInner(y + yC, x + xC);
+
     }
 
     // maze console printer

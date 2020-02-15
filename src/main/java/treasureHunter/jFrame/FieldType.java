@@ -1,6 +1,6 @@
 package treasureHunter.jFrame;
 
-public enum FieldTypeByEntrance {
+public enum FieldType {
 
     TOP_BOTTOM_RIGHT_LEFT,
     TOP_BOTTOM_LEFT,

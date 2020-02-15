@@ -1,6 +1,6 @@
 package treasureHunter.gameMechanics;
 
-import treasureHunter.jFrame.FieldTypeByEntrance;
+import treasureHunter.jFrame.FieldType;
 
 public class Field {
 
@@ -9,20 +9,18 @@ public class Field {
     private boolean bottomNeighbour;
     private boolean rightNeighbour;
     private boolean leftNeighbour;
-    private boolean isHidden;
     private boolean isFirst = false;
-    private boolean isRoom;
+    private boolean isMonster;
     private boolean isTreasure;
     private boolean isPlayer;
 
-    Field(boolean isOpen, boolean topNeighbour, boolean bottomNeighbour, boolean rightNeighbour, boolean leftNeighbour) {
-        this.isOpen = isOpen;
-        this.topNeighbour = topNeighbour;
-        this.bottomNeighbour = bottomNeighbour;
-        this.rightNeighbour = rightNeighbour;
-        this.leftNeighbour = leftNeighbour;
-        this.isHidden = true;
-        this.isRoom = false;
+    Field() {
+        this.isOpen = false;
+        this.topNeighbour = false;
+        this.bottomNeighbour = false;
+        this.rightNeighbour = false;
+        this.leftNeighbour = false;
+        this.isMonster = false;
         this.isTreasure = false;
         this.isPlayer = false;
     }
@@ -41,14 +39,6 @@ public class Field {
 
     void setFirst(boolean first) {
         isFirst = first;
-    }
-
-    public boolean isHidden() {
-        return isHidden;
-    }
-
-    public void setHidden(boolean hidden) {
-        isHidden = hidden;
     }
 
     boolean isOpened() {
@@ -91,12 +81,12 @@ public class Field {
         this.leftNeighbour = leftNeighbour;
     }
 
-    public boolean isRoom() {
-        return isRoom;
+    public boolean isMonster() {
+        return isMonster;
     }
 
-    public void setRoom(boolean room) {
-        isRoom = room;
+    public void setMonster(boolean monster) {
+        isMonster = monster;
     }
 
     public boolean isTreasure() {
@@ -109,7 +99,7 @@ public class Field {
 
     @Override
     public String toString() {
-        if(isRoom) return "r";
+        if(isMonster) return "r";
         if(isTreasure) return "g";
         else {
             if (topNeighbour && bottomNeighbour && rightNeighbour && leftNeighbour) return "\u254B";
@@ -131,29 +121,29 @@ public class Field {
         }
     }
 
-    public FieldTypeByEntrance toFieldTypeByEntrance() {
-        if(isPlayer) return  FieldTypeByEntrance.PLAYER;
-        if (isRoom) return FieldTypeByEntrance.ROOM;
-        if (isTreasure) return FieldTypeByEntrance.TREASURE;
-        if (isFirst) return FieldTypeByEntrance.ENTRANCE;
+    public FieldType toFieldTypeByEntrance() {
+        if(isPlayer) return  FieldType.PLAYER;
+        if (isMonster) return FieldType.ROOM;
+        if (isTreasure) return FieldType.TREASURE;
+        if (isFirst) return FieldType.ENTRANCE;
         else {
             if (topNeighbour && bottomNeighbour && rightNeighbour && leftNeighbour)
-                return FieldTypeByEntrance.TOP_BOTTOM_RIGHT_LEFT;
-            else if (topNeighbour && bottomNeighbour && rightNeighbour) return FieldTypeByEntrance.TOP_BOTTOM_RIGHT;
-            else if (topNeighbour && bottomNeighbour && leftNeighbour) return FieldTypeByEntrance.TOP_BOTTOM_LEFT;
-            else if (topNeighbour && rightNeighbour && leftNeighbour) return FieldTypeByEntrance.TOP_RIGHT_LEFT;
-            else if (bottomNeighbour && rightNeighbour && leftNeighbour) return FieldTypeByEntrance.BOTTOM_RIGHT_LEFT;
-            else if (topNeighbour && bottomNeighbour) return FieldTypeByEntrance.TOP_BOTTOM;
-            else if (topNeighbour && leftNeighbour) return FieldTypeByEntrance.TOP_LEFT;
-            else if (topNeighbour && rightNeighbour) return FieldTypeByEntrance.TOP_RIGHT;
-            else if (bottomNeighbour && rightNeighbour) return FieldTypeByEntrance.BOTTOM_RIGHT;
-            else if (bottomNeighbour && leftNeighbour) return FieldTypeByEntrance.BOTTOM_LEFT;
-            else if (rightNeighbour && leftNeighbour) return FieldTypeByEntrance.LEFT_RIGHT;
-            else if (topNeighbour) return FieldTypeByEntrance.TOP;
-            else if (bottomNeighbour) return FieldTypeByEntrance.BOTTOM;
-            else if (rightNeighbour) return FieldTypeByEntrance.RIGHT;
-            else if (leftNeighbour) return FieldTypeByEntrance.LEFT;
-            else return FieldTypeByEntrance.NO_ENTRIES;
+                return FieldType.TOP_BOTTOM_RIGHT_LEFT;
+            else if (topNeighbour && bottomNeighbour && rightNeighbour) return FieldType.TOP_BOTTOM_RIGHT;
+            else if (topNeighbour && bottomNeighbour && leftNeighbour) return FieldType.TOP_BOTTOM_LEFT;
+            else if (topNeighbour && rightNeighbour && leftNeighbour) return FieldType.TOP_RIGHT_LEFT;
+            else if (bottomNeighbour && rightNeighbour && leftNeighbour) return FieldType.BOTTOM_RIGHT_LEFT;
+            else if (topNeighbour && bottomNeighbour) return FieldType.TOP_BOTTOM;
+            else if (topNeighbour && leftNeighbour) return FieldType.TOP_LEFT;
+            else if (topNeighbour && rightNeighbour) return FieldType.TOP_RIGHT;
+            else if (bottomNeighbour && rightNeighbour) return FieldType.BOTTOM_RIGHT;
+            else if (bottomNeighbour && leftNeighbour) return FieldType.BOTTOM_LEFT;
+            else if (rightNeighbour && leftNeighbour) return FieldType.LEFT_RIGHT;
+            else if (topNeighbour) return FieldType.TOP;
+            else if (bottomNeighbour) return FieldType.BOTTOM;
+            else if (rightNeighbour) return FieldType.RIGHT;
+            else if (leftNeighbour) return FieldType.LEFT;
+            else return FieldType.NO_ENTRIES;
         }
     }
 }

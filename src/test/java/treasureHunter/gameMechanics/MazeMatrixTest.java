@@ -95,5 +95,35 @@ class MazeMatrixTest {
 
     }
 
+    @Test
+    void checkHowManyFieldsAreDone(){
+        final int NUMB_OF_CHECKS = 10000;
+        final int ROWS = 50;
+        final int COLUMNS = 30;
+        final int NUMBER_OF_MONSTERS = 20;
+        final int NUMBER_OF_TREASURES = 5;
+        final int NUMB_OF_FIELDS = ROWS * COLUMNS;
+        int assertsCounter = 0;
+        int stackCounter = 0;
+        int lowest = NUMB_OF_FIELDS;
+        for (int k = 0; k < NUMB_OF_CHECKS; k++) {
+            matrix = new MazeMatrix(ROWS, COLUMNS, NUMBER_OF_MONSTERS, NUMBER_OF_TREASURES);
+            if(matrix.isStackOverFlowError()) stackCounter++;
+
+            int counter = 0;
+            for (int i = 0; i < matrix.getMatrix().length; i++) {
+                for (int j = 0; j < matrix.getMatrix().length; j++) {
+                    Field thisPlace = matrix.getMatrix()[i][j];
+                    if (thisPlace.isOpened())
+                        counter++;
+                }
+            }
+            assertsCounter += counter;
+        }
+
+        System.out.println("avarage:"+(assertsCounter/NUMB_OF_CHECKS)+" fields open/"+NUMB_OF_FIELDS+" fields, StackOverFlowError count:"+stackCounter+"/"+NUMB_OF_CHECKS+" tries.");
+
+    }
+
 
 }

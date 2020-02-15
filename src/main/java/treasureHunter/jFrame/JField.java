@@ -8,6 +8,7 @@ class JField {
 
     private JLabel label;
     private Field fieldData;
+    private final String RESOURCES_PATH = "src\\main\\resources\\treasureHunter\\img\\";
 
     JField(Field fieldData) {
         this.fieldData = fieldData;
@@ -20,69 +21,51 @@ class JField {
     }
 
     void getImageLabel() {
+        label.setIcon(new ImageIcon(RESOURCES_PATH+getImage()+".jpg"));
+    }
+
+    private String getImage() {
         switch (fieldData.toFieldTypeByEntrance()) {
             case PLAYER:
-                label.setIcon(new ImageIcon("src\\main\\resources\\treasureHunter\\img\\Player.jpg"));
-                break;
+                return "Player";
             case ROOM:
-                label.setIcon(new ImageIcon("src\\main\\resources\\treasureHunter\\img\\Room.jpg"));
-                break;
+                return "Room";
             case ENTRANCE:
-                label.setIcon(new ImageIcon("src\\main\\resources\\treasureHunter\\img\\Entrance.jpg"));
-                break;
+                return "Entrance";
             case TREASURE:
-                label.setIcon(new ImageIcon("src\\main\\resources\\treasureHunter\\img\\Treasure.jpg"));
-                break;
+                return "Treasure";
             case TOP_BOTTOM_RIGHT_LEFT:
-                label.setIcon(new ImageIcon("src\\main\\resources\\treasureHunter\\img\\TRLB.jpg"));
-                break;
+                return "TRLB";
             case TOP_BOTTOM_LEFT:
-                label.setIcon(new ImageIcon("src\\main\\resources\\treasureHunter\\img\\TLB.jpg"));
-                break;
+                return "TLB";
             case TOP_BOTTOM_RIGHT:
-                label.setIcon(new ImageIcon("src\\main\\resources\\treasureHunter\\img\\TRB.jpg"));
-                break;
+                return "TRB";
             case TOP_RIGHT_LEFT:
-                label.setIcon(new ImageIcon("src\\main\\resources\\treasureHunter\\img\\TLR.jpg"));
-                break;
+                return "TLR";
             case BOTTOM_RIGHT_LEFT:
-                label.setIcon(new ImageIcon("src\\main\\resources\\treasureHunter\\img\\RLB.jpg"));
-                break;
+                return "RLB";
             case TOP_BOTTOM:
-                label.setIcon(new ImageIcon("src\\main\\resources\\treasureHunter\\img\\TB.jpg"));
-                break;
+                return "TB";
             case TOP_LEFT:
-                label.setIcon(new ImageIcon("src\\main\\resources\\treasureHunter\\img\\TL.jpg"));
-                break;
+                return "TL";
             case TOP_RIGHT:
-                label.setIcon(new ImageIcon("src\\main\\resources\\treasureHunter\\img\\TR.jpg"));
-                break;
+                return "TR";
             case BOTTOM_LEFT:
-                label.setIcon(new ImageIcon("src\\main\\resources\\treasureHunter\\img\\LB.jpg"));
-                break;
+                return "LB";
             case BOTTOM_RIGHT:
-                label.setIcon(new ImageIcon("src\\main\\resources\\treasureHunter\\img\\RB.jpg"));
-                break;
+                return "RB";
             case LEFT_RIGHT:
-                label.setIcon(new ImageIcon("src\\main\\resources\\treasureHunter\\img\\RL.jpg"));
-                break;
+                return "RL";
             case TOP:
-                label.setIcon(new ImageIcon("src\\main\\resources\\treasureHunter\\img\\T.jpg"));
-                break;
+                return "T";
             case LEFT:
-                label.setIcon(new ImageIcon("src\\main\\resources\\treasureHunter\\img\\L.jpg"));
-                break;
+                return "L";
             case RIGHT:
-                label.setIcon(new ImageIcon("src\\main\\resources\\treasureHunter\\img\\R.jpg"));
-                break;
+                return "R";
             case BOTTOM:
-                label.setIcon(new ImageIcon("src\\main\\resources\\treasureHunter\\img\\B.jpg"));
-                break;
-
-
+                return "B";
             default:
-                label.setIcon(new ImageIcon("src\\main\\resources\\treasureHunter\\img\\EMPTY.jpg"));
-                break;
+                return "EMPTY";
         }
     }
 

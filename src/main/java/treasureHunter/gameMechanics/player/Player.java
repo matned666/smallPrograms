@@ -1,29 +1,29 @@
 package treasureHunter.gameMechanics.player;
 
-import treasureHunter.jFrame.FieldTypeByEntrance;
+import treasureHunter.jFrame.FieldType;
 
 public class Player {
-    private FieldTypeByEntrance movementPossibilities;
+    private FieldType movementPossibilities;
     private int HP;
     private int col;
     private int row;
-    private int points;
+    private int collectedTreasuresInLevel;
 
     public Player(int HP) {
         this.HP = HP;
-        this.points = 0;
+        this.collectedTreasuresInLevel = 0;
     }
 
-    public void setMovementPossibilities(FieldTypeByEntrance movementPossibilities) {
+    public void setMovementPossibilities(FieldType movementPossibilities) {
         this.movementPossibilities = movementPossibilities;
     }
 
-    public int getPoints() {
-        return points;
+    public void setCollectedTreasuresInLevel(int collectedTreasuresInLevel) {
+        this.collectedTreasuresInLevel = collectedTreasuresInLevel;
     }
 
-    public void setPoints(int points) {
-        this.points = points;
+    public int getCollectedTreasuresInLevel() {
+        return collectedTreasuresInLevel;
     }
 
     public int getHP() {

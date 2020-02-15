@@ -1,23 +1,35 @@
 package treasureHunter.jFrame;
 
-
+import treasureHunter.fileOperations.FileOperations;
 import treasureHunter.gameMechanics.Field;
 import treasureHunter.gameMechanics.MazeMatrix;
 
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
+import java.io.FileNotFoundException;
 
 public class Game {
 
+    private static final String RESOURCE_PATH = "src\\main\\resources\\treasureHunter\\img\\";
+
     private MazeMatrix myMaze;
+
     private JField[][] jMatrix;
     private JFrame frame;
     private GameState gameState;
     private JLabel gameInfo;
+    private JDialog dialogWithWinOrLoseMessage;
+    private JLabel topScore;
+
+
+    private final Font TEXT_FONT = new Font("Arial", Font.BOLD,20);
+    private final String TOP_SCORE_TEXT = "Most treasures collected in 1 game: ";
+
     private int levelNumber;
     private int monsters;
     private int treasures;
+    private int totallyCollectedTreasures;
 
     private final int FIELD_SIZE = 20;
     private final int NUMBER_OF_TREASURES = 5;
@@ -48,14 +60,42 @@ public class Game {
         playerField = myMaze.getMatrix()[myMaze.getPlayer().getCol()][myMaze.getPlayer().getRow()];
         gameInfo = new JLabel();
         gameInfo.setBounds(10,FIELD_SIZE * row + 30, FIELD_SIZE * column + 25 , 50);
-        gameInfo.setFont(new Font("Arial", Font.BOLD,20));
+        gameInfo.setFont(TEXT_FONT);
         gameInfo.setText("Lets go");
+        topScore = new JLabel();
+        topScore.setBounds(10,FIELD_SIZE * row + 60, FIELD_SIZE * column + 25 , 50);
+        topScore.setFont(TEXT_FONT);
+        try {
+            topScore.setText(TOP_SCORE_TEXT+FileOperations.readStringFromFile());
+        } catch (FileNotFoundException e) {
+            System.out.println(" File not found ");
+
+        }
+        frame.add(topScore);
         frame.add(gameInfo);
+        playerMovement();
+        frame.setLayout(null);
+        frame.setVisible(true);
+    }
+
+    private void initializeMatrix(int rooms, int treasures) {
+        myMaze = new MazeMatrix(column, row, rooms, treasures);
+        jMatrix = new JField[row][column];
+        for (int i = 0; i < jMatrix.length; i++) {
+            for (int j = 0; j < jMatrix[i].length; j++) {
+                jMatrix[i][j] = new JField(myMaze.getMatrix()[i][j]);
+                jMatrix[i][j].getLabel().setBounds(j * FIELD_SIZE + 10, i * FIELD_SIZE + 10, FIELD_SIZE, FIELD_SIZE);
+                frame.add(jMatrix[i][j].getLabel());
+            }
+        }
+    }
+
+    private void playerMovement(){
         frame.addKeyListener(new KeyListener() {
             @Override
             public void keyTyped(KeyEvent keyEvent) {
 
-                if(gameState != GameState.PLAYING) gameOver();
+                if(gameState != GameState.PLAYING) gameEnd();
                 if (keyEvent.getKeyChar() == '8' && playerField.isTopNeighbour() && gameState == GameState.PLAYING) {
                     move(1, 0);
                 } else if (keyEvent.getKeyChar() == '2' && playerField.isBottomNeighbour() && gameState == GameState.PLAYING) {
@@ -75,27 +115,12 @@ public class Game {
             public void keyReleased(KeyEvent keyEvent) {
             }
         });
-        frame.setLayout(null);
-        frame.setVisible(true);
     }
-
-    private void gameOver() {
-        if(gameState == GameState.GAME_OVER) {
-            newGame(NUMBER_OF_MONSTERS, NUMBER_OF_TREASURES);
-            levelNumber = 1;
-        }
-        else if(gameState == GameState.WIN) {
-            monsters +=5;
-            treasures+=2;
-            newGame(monsters, treasures);
-            levelNumber++;
-        }
-    }
-
-
 
     private void setGameInfo(){
-        gameInfo.setText("HP:"+ myMaze.getPlayer().getHP()+" Treasure:"+ myMaze.getPlayer().getPoints()+"/"+treasures+" Game:"+gameState+"  level:"+levelNumber);
+        gameInfo.setText("HP:"+ myMaze.getPlayer().getHP()+" Treasure:"+ myMaze.getPlayer().getCollectedTreasuresInLevel()+
+                "/"+myMaze.getNUMBER_OF_TREASURES()+" Game:"+gameState+"  level:"+levelNumber+
+                " Your Treasure:"+totallyCollectedTreasures);
     }
 
     private void move(int column, int row) {
@@ -116,11 +141,11 @@ public class Game {
             moveAllRooms();
             if (myMaze.getPlayer().getHP() <= 0) {
                 gameState = GameState.GAME_OVER;
-                dialogWithWinOrLooseMessage();
+                endGameWindowFrame();
             }
-            if (myMaze.getPlayer().getPoints() >= myMaze.getNUMBER_OF_TREASURES()) {
+            if (myMaze.getPlayer().getCollectedTreasuresInLevel() >= myMaze.getNUMBER_OF_TREASURES()) {
                 gameState = GameState.WIN;
-                dialogWithWinOrLooseMessage();
+                endGameWindowFrame();
             }
             setGameInfo();
 
@@ -132,25 +157,24 @@ public class Game {
     }
 
     private void isRoomFound(int column, int row) {
-        if (myMaze.getMatrix()[column][row].isRoom()) {
+        if (myMaze.getMatrix()[column][row].isMonster()) {
             myMaze.getPlayer().setHP(myMaze.getPlayer().getHP() - 1);
-            System.out.println("Player HP:" + myMaze.getPlayer().getHP() + " points:" + myMaze.getPlayer().getPoints());
-            myMaze.getMatrix()[column][row].setRoom(false);
+            myMaze.getMatrix()[column][row].setMonster(false);
         }
     }
 
     private void isTreasureFound(int column, int row) {
         if (myMaze.getMatrix()[column][row].isTreasure()) {
-            myMaze.getPlayer().setPoints(myMaze.getPlayer().getPoints() + 1);
-            System.out.println("Player HP:" + myMaze.getPlayer().getHP() + " points:" + myMaze.getPlayer().getPoints());
+            myMaze.getPlayer().setCollectedTreasuresInLevel(myMaze.getPlayer().getCollectedTreasuresInLevel() + 1);
             myMaze.getMatrix()[column][row].setTreasure(false);
+            totallyCollectedTreasures++;
 
         }
     }
 
     private void moveRoomInner(int column, int row, int columnMove, int rowMove) {
-        myMaze.getMatrix()[column][row].setRoom(false);
-        myMaze.getMatrix()[column - columnMove][row - rowMove].setRoom(true);
+        myMaze.getMatrix()[column][row].setMonster(false);
+        myMaze.getMatrix()[column - columnMove][row - rowMove].setMonster(true);
         jMatrix[column][row].getImageLabel();
         jMatrix[column - columnMove][row - rowMove].getImageLabel();
         if(myMaze.getMatrix()[column - columnMove][row - rowMove].isPlayer()) myMaze.getPlayer().setHP(myMaze.getPlayer().getHP()-1);
@@ -168,78 +192,94 @@ public class Game {
     private void moveAllRooms(){
         for(int i = 0; i < myMaze.getMatrix().length; i++) {
             for (int j = 0; j < myMaze.getMatrix()[i].length; j++) {
-                if(myMaze.getMatrix()[i][j].isRoom()) moveRoom(i,j);
+                if(myMaze.getMatrix()[i][j].isMonster()) moveRoom(i,j);
             }
         }
     }
 
-    private void dialogWithWinOrLooseMessage (){
-        JDialog dialogWithWinOrLoseMessage = new JDialog(frame);
+    private void endGameWindowFrame(){
+        dialogWithWinOrLoseMessage = new JDialog(frame);
         dialogWithWinOrLoseMessage.setSize(400,200);
-        JLabel labelWithMessage = new JLabel();
-        labelWithMessage.setBounds(10,10,380,50);
-        if(gameState == GameState.GAME_OVER) labelWithMessage.setText("GAME OVER");
-        else if(gameState == GameState.WIN) labelWithMessage.setText("LEVEL:"+levelNumber+" ID DONE");
-        labelWithMessage.setVerticalAlignment(SwingConstants.CENTER);
-        labelWithMessage.setHorizontalAlignment(SwingConstants.CENTER);
-        dialogWithWinOrLoseMessage.add(labelWithMessage);
-        labelWithMessage.setFont(new Font("Comic Sans MS", Font.BOLD, 32));
+        dialogWithWinOrLoseMessage.addWindowListener(new WindowAdapter() {
+            @Override
+            public void windowClosed(WindowEvent e) {
+                dialogWithWinOrLoseMessage.dispose();
+                gameEnd();
+            }
+        });
+        endGameWindowFrameAcceptButton();
+        endGameWindowFrameImageLabel();
+        endGameWindowFrameMessageLabel();
+        dialogWithWinOrLoseMessage.setLayout(null);
+        dialogWithWinOrLoseMessage.setVisible(true);
+    }
+
+    private void endGameWindowFrameAcceptButton(){
         JButton confirmationButton = new JButton();
         confirmationButton.setBounds(150,70,100,50);
         confirmationButton.setText("CONTINUE");
         confirmationButton.addActionListener(actionEvent -> {
             dialogWithWinOrLoseMessage.dispose();
-            gameOver();
+            gameEnd();
         });
         confirmationButton.addKeyListener(new KeyListener() {
             @Override
             public void keyTyped(KeyEvent keyEvent) {
                 if (keyEvent.getKeyChar() == 10) {
                     dialogWithWinOrLoseMessage.dispose();
-                    gameOver();
+                    gameEnd();
                 }
             }
-
             @Override
             public void keyPressed(KeyEvent keyEvent) {
-
             }
-
             @Override
             public void keyReleased(KeyEvent keyEvent) {
 
             }
         });
-        JLabel labelWithImage = new JLabel();
-        labelWithImage.setBounds(270,70,50,50);
-        if(gameState==GameState.GAME_OVER) labelWithImage.setIcon(new ImageIcon("src\\main\\resources\\treasureHunter\\img\\gameOver.jpg"));
-        if(gameState==GameState.WIN) labelWithImage.setIcon(new ImageIcon("src\\main\\resources\\treasureHunter\\img\\winLevel.jpg"));
-
-
-        dialogWithWinOrLoseMessage.add(labelWithImage);
         dialogWithWinOrLoseMessage.add(confirmationButton);
-        dialogWithWinOrLoseMessage.addWindowListener(new WindowAdapter() {
-            @Override
-            public void windowClosed(WindowEvent e) {
-                dialogWithWinOrLoseMessage.dispose();
-                gameOver();
-            }
-        });
-        dialogWithWinOrLoseMessage.setLayout(null);
-        dialogWithWinOrLoseMessage.setVisible(true);
     }
 
+    private void endGameWindowFrameMessageLabel(){
+        JLabel messageLabel = new JLabel();
+        messageLabel.setBounds(10,10,380,50);
+        if(gameState == GameState.GAME_OVER) messageLabel.setText("GAME OVER");
+        else if(gameState == GameState.WIN) messageLabel.setText("LEVEL:"+levelNumber+" ID DONE");
+        messageLabel.setVerticalAlignment(SwingConstants.CENTER);
+        messageLabel.setHorizontalAlignment(SwingConstants.CENTER);
+        dialogWithWinOrLoseMessage.add(messageLabel);
+        messageLabel.setFont(new Font("Comic Sans MS", Font.BOLD, 32));
+    }
 
-    private void initializeMatrix(int rooms, int treasures) {
-        myMaze = new MazeMatrix(column, row, rooms, treasures);
-        jMatrix = new JField[row][column];
+    private void endGameWindowFrameImageLabel(){
+        JLabel labelWithImage = new JLabel();
+        labelWithImage.setBounds(270,70,50,50);
+        if(gameState==GameState.GAME_OVER) labelWithImage.setIcon(new ImageIcon(RESOURCE_PATH + "gameOver.jpg"));
+        if(gameState==GameState.WIN) labelWithImage.setIcon(new ImageIcon(RESOURCE_PATH + "winLevel.jpg"));
+        dialogWithWinOrLoseMessage.add(labelWithImage);
+    }
 
-        for (int i = 0; i < jMatrix.length; i++) {
-            for (int j = 0; j < jMatrix[i].length; j++) {
-                jMatrix[i][j] = new JField(myMaze.getMatrix()[i][j]);
-                jMatrix[i][j].getLabel().setBounds(j * FIELD_SIZE + 10, i * FIELD_SIZE + 10, FIELD_SIZE, FIELD_SIZE);
-                frame.add(jMatrix[i][j].getLabel());
+    private void gameEnd() {
+        if(gameState == GameState.GAME_OVER) {
+            newGame(NUMBER_OF_MONSTERS, NUMBER_OF_TREASURES);
+            levelNumber = 1;
+            try {
+                if(totallyCollectedTreasures > Integer.parseInt(FileOperations.readStringFromFile())) {
+                    FileOperations.writeStringToFile(String.valueOf(totallyCollectedTreasures));
+                    topScore.setText(TOP_SCORE_TEXT+FileOperations.readStringFromFile());
+                }
+            } catch (FileNotFoundException e) {
+                System.out.println(" File not found ");
             }
+            totallyCollectedTreasures = 0;
+
+        }
+        else if(gameState == GameState.WIN) {
+            monsters +=5;
+            treasures+=2;
+            newGame(monsters, treasures);
+            levelNumber++;
         }
     }
 
