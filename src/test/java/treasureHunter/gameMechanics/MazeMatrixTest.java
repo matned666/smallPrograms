@@ -97,10 +97,10 @@ class MazeMatrixTest {
 
     @Test
     void checkHowManyFieldsAreDone(){
-        final int NUMB_OF_CHECKS = 10000;
-        final int ROWS = 50;
-        final int COLUMNS = 30;
-        final int NUMBER_OF_MONSTERS = 20;
+        final int NUMB_OF_CHECKS = 1000;
+        final int ROWS = 30;
+        final int COLUMNS = 20;
+        final int NUMBER_OF_MONSTERS = 10;
         final int NUMBER_OF_TREASURES = 5;
         final int NUMB_OF_FIELDS = ROWS * COLUMNS;
         int assertsCounter = 0;

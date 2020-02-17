@@ -1,0 +1,98 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.canvas.Canvas?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ColorPicker?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="700.0" prefWidth="900.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="painterFX.paint.PainterController">
+   <children>
+      <BorderPane prefHeight="700.0" prefWidth="900.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+         <left>
+            <VBox prefWidth="100.0" BorderPane.alignment="CENTER">
+               <children>
+                  <Button fx:id="lineTool" mnemonicParsing="false" onAction="#changeTool" prefHeight="60.0" prefWidth="100.0" text="Line">
+                     <font>
+                        <Font name="System Bold" size="22.0" />
+                     </font></Button>
+                  <Button fx:id="rectangleTool" mnemonicParsing="false" onAction="#changeTool" prefHeight="60.0" prefWidth="100.0" text="Rect">
+                     <font>
+                        <Font name="System Bold" size="22.0" />
+                     </font></Button>
+                  <Button fx:id="triangleTool" mnemonicParsing="false" onAction="#changeTool" prefHeight="60.0" prefWidth="100.0" text="Triang">
+                     <font>
+                        <Font name="System Bold" size="22.0" />
+                     </font></Button>
+                  <Button fx:id="circleTool" mnemonicParsing="false" onAction="#changeTool" prefHeight="60.0" prefWidth="100.0" text="Circle">
+                     <font>
+                        <Font name="System Bold" size="22.0" />
+                     </font></Button>
+                  <Button fx:id="ellipseTool" mnemonicParsing="false" onAction="#changeTool" prefHeight="60.0" prefWidth="100.0" text="Ellipse">
+                     <font>
+                        <Font name="System Bold" size="22.0" />
+                     </font></Button>
+                  <Button fx:id="starTool" mnemonicParsing="false" onAction="#changeTool" prefHeight="60.0" prefWidth="100.0" text="Star">
+                     <font>
+                        <Font name="System Bold" size="22.0" />
+                     </font></Button>
+                  <Button fx:id="pointTool" mnemonicParsing="false" onAction="#changeTool" prefHeight="60.0" prefWidth="100.0" text="Point">
+                     <font>
+                        <Font name="System Bold" size="22.0" />
+                     </font></Button>
+                  <Pane prefHeight="30.0" prefWidth="100.0" />
+                  <Button fx:id="multiplyTool1" mnemonicParsing="false" onAction="#multiplyAll" prefHeight="60.0" prefWidth="100.0" text="MULTI">
+                     <font>
+                        <Font name="System Bold" size="22.0" />
+                     </font>
+                  </Button>
+               </children>
+            </VBox>
+         </left>
+         <top>
+            <HBox prefHeight="40.0" prefWidth="900.0" BorderPane.alignment="CENTER">
+               <children>
+                  <Button mnemonicParsing="false" onAction="#newButtonAction" prefHeight="40.0" prefWidth="300.0" text="New">
+                     <font>
+                        <Font size="22.0" />
+                     </font></Button>
+                  <Button mnemonicParsing="false" onAction="#saveAction" prefHeight="40.0" prefWidth="300.0" text="Save">
+                     <font>
+                        <Font size="22.0" />
+                     </font></Button>
+                  <Button mnemonicParsing="false" onAction="#loadAction" prefHeight="40.0" prefWidth="300.0" text="Load">
+                     <font>
+                        <Font size="22.0" />
+                     </font></Button>
+               </children>
+            </HBox>
+         </top>
+         <bottom>
+            <HBox prefHeight="40.0" prefWidth="900.0" BorderPane.alignment="CENTER">
+               <children>
+                  <Label text="Fill color : ">
+                     <font>
+                        <Font size="26.0" />
+                     </font>
+                  </Label>
+                  <ColorPicker fx:id="fillColorTool" prefHeight="40.0" prefWidth="150.0" />
+                  <Label text="     Stroke color : ">
+                     <font>
+                        <Font size="26.0" />
+                     </font>
+                  </Label>
+                  <ColorPicker fx:id="strokeColorTool" prefHeight="40.0" prefWidth="150.0" />
+               </children>
+            </HBox>
+         </bottom>
+         <center>
+            <Canvas fx:id="canvas" height="594.0" width="765.0" />
+         </center>
+      </BorderPane>
+   </children>
+</AnchorPane>
