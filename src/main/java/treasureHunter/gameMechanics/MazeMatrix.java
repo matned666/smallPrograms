@@ -159,8 +159,9 @@ public class MazeMatrix {
         generateMazeInner(startPositionRow, startPositionColumn);
     }
 
-    private void generateMazeInner(int y, int x) {
+    private synchronized void generateMazeInner(int y, int x) {
         try {
+            System.out.println(Thread.currentThread().getName());
             int randomDirection = (int) (Math.random() * (100)) + 1;
             if (openFields < (numberOfFields - 10)) {
                 if (randomDirection <= 25 && (y - 1) >= 0) {
@@ -181,7 +182,7 @@ public class MazeMatrix {
         }
     }
 
-    private void generateMazeInnerStatements(int y, int x, int yC, int xC){
+    private synchronized void generateMazeInnerStatements(int y, int x, int yC, int xC){
         if (!matrix[y + yC][x + xC].isOpened()) {
             if(yC == -1 && xC == 0) {
                 matrix[y][x].setTopNeighbour(true);
@@ -202,9 +203,7 @@ public class MazeMatrix {
             matrix[y + yC][x + xC].setOpen(true);
             openFields++;
         }
-
             generateMazeInner(y + yC, x + xC);
-
     }
 
     // maze console printer

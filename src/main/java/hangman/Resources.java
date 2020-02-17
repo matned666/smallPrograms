@@ -5,8 +5,7 @@ import java.util.List;
 import java.util.Random;
 
 public class Resources {
-
-    private static final List<String> DATA = Arrays.asList(
+    public static final List<String> DATA = Arrays.asList(
             "Ala ma kota",
             "Kot ma Ale",
             "Programowanie JAVA",
@@ -48,7 +47,8 @@ public class Resources {
 
     public static String getRandomPuzzle() {
         Random random = new Random();
-        int index = random.nextInt(DATA.size());
-        return DATA.get(index);
+        //0,1,2 jak damy nextInt(3)
+        int randomIndex = random.nextInt(DATA.size());
+        return DATA.get(randomIndex);
     }
 }
