@@ -1,0 +1,116 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import java.lang.*?>
+<?import javafx.collections.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.image.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
+
+<AnchorPane prefHeight="800.0" prefWidth="1000.0" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/2.2" fx:controller="personelInfo.PersonnelController">
+  <children>
+    <MenuBar layoutX="0.0" layoutY="0.0" prefWidth="1000.0" useSystemMenuBar="true">
+      <menus>
+        <Menu mnemonicParsing="false" text="File">
+          <items>
+            <MenuItem mnemonicParsing="false" onAction="#menuItemNewCompany" text="New company" />
+            <MenuItem mnemonicParsing="false" onAction="#menuItemSave" text="Save " />
+            <MenuItem mnemonicParsing="false" onAction="#menuItemLoad" text="Load" />
+            <MenuItem mnemonicParsing="false" onAction="#menuItemClose" text="Close" />
+          </items>
+        </Menu>
+        <Menu mnemonicParsing="false" text="Help">
+          <items>
+            <MenuItem mnemonicParsing="false" onAction="#menuItemInformation" text="Information" />
+          </items>
+        </Menu>
+      </menus>
+    </MenuBar>
+    <SplitPane dividerPositions="0.45954356846473027" focusTraversable="false" layoutX="13.0" layoutY="84.0" prefHeight="687.0" prefWidth="966.0">
+      <items>
+        <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="160.0" prefWidth="100.0">
+          <children>
+            <ScrollPane layoutX="0.0" layoutY="169.0" prefHeight="456.0" prefWidth="440.0">
+              <content>
+                <VBox fx:id="vBoxWithWorkers" prefHeight="455.0" prefWidth="440.0" />
+              </content>
+            </ScrollPane>
+            <Label layoutX="10.0" layoutY="20.0" prefWidth="112.0" text="Workers list:">
+              <font>
+                <Font size="18.0" fx:id="x2" />
+              </font>
+            </Label>
+            <Button focusTraversable="false" layoutX="14.0" layoutY="638.0" mnemonicParsing="false" onAction="#addWorker" prefHeight="37.0" prefWidth="112.0" text="Add new worker">
+              <font>
+                <Font size="12.0" fx:id="x1" />
+              </font>
+            </Button>
+            <Button focusTraversable="false" font="$x1" layoutX="133.0" layoutY="638.0" mnemonicParsing="false" onAction="#removeWorker" prefHeight="37.0" prefWidth="105.0" text="Remove worker" />
+            <ChoiceBox fx:id="sortByChoiceBox" focusTraversable="false" layoutX="287.0" layoutY="14.0" prefHeight="37.0" prefWidth="135.0">
+              <items>
+                <FXCollections fx:factory="observableArrayList">
+                  <String fx:value="Item 1" />
+                  <String fx:value="Item 2" />
+                  <String fx:value="Item 3" />
+                </FXCollections>
+              </items>
+            </ChoiceBox>
+            <ChoiceBox id="sortByChoiceBox" fx:id="workersTypeShowChoiceBox" focusTraversable="false" layoutX="114.0" layoutY="14.0" prefHeight="37.0" prefWidth="158.0">
+              <items>
+                <FXCollections fx:factory="observableArrayList">
+                  <String fx:value="Item 1" />
+                  <String fx:value="Item 2" />
+                  <String fx:value="Item 3" />
+                </FXCollections>
+              </items>
+            </ChoiceBox>
+            <TextField id="numberOfWorkersTextField" fx:id="additionalSearchTextField" focusTraversable="false" layoutX="114.0" layoutY="65.0" prefHeight="37.0" prefWidth="308.0" />
+            <Button focusTraversable="false" font="$x2" layoutX="114.0" layoutY="115.0" mnemonicParsing="false" onAction="#searchWorkers" prefHeight="37.0" prefWidth="308.0" text="Show workers" />
+            <Label layoutX="22.0" layoutY="65.0" prefWidth="73.0" text="Additional search" wrapText="true" />
+          </children>
+        </AnchorPane>
+        <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="680.0" prefWidth="523.0">
+          <children>
+            <TextField fx:id="nameTextField" focusTraversable="false" layoutX="133.0" layoutY="60.0" prefHeight="37.0" prefWidth="362.0" />
+            <Label alignment="CENTER_RIGHT" font="$x2" layoutX="0.0" layoutY="67.0" prefWidth="119.0" text="*Name:" textAlignment="RIGHT" />
+            <TextField fx:id="surnameTextField" focusTraversable="false" layoutX="133.0" layoutY="108.0" prefHeight="37.0" prefWidth="362.0" />
+            <Label alignment="CENTER_RIGHT" font="$x2" layoutX="0.0" layoutY="115.0" prefWidth="119.0" text="*Surname:" textAlignment="RIGHT" />
+            <TextField fx:id="ageTextField" focusTraversable="false" layoutX="133.0" layoutY="155.0" prefHeight="37.0" prefWidth="362.0" />
+            <Label alignment="CENTER_RIGHT" font="$x2" layoutX="0.0" layoutY="162.0" prefWidth="119.0" text="*Age:" textAlignment="RIGHT" />
+            <TextField fx:id="positionTextField" focusTraversable="false" layoutX="133.0" layoutY="203.0" prefHeight="37.0" prefWidth="362.0" />
+            <Label alignment="CENTER_RIGHT" font="$x2" layoutX="0.0" layoutY="210.0" prefWidth="119.0" text="Position:" textAlignment="RIGHT" />
+            <Label alignment="CENTER_RIGHT" font="$x2" layoutX="277.0" layoutY="23.0" prefWidth="119.0" text="Worker's ID:" textAlignment="RIGHT" />
+            <TextField fx:id="workersIdTextField" editable="false" focusTraversable="false" layoutX="409.0" layoutY="21.0" prefHeight="24.0" prefWidth="84.0" />
+            <ImageView fitHeight="100.0" fitWidth="150.0" layoutX="342.0" layoutY="559.0" pickOnBounds="true" preserveRatio="true">
+              <image>
+                <Image url="@personelInfo/logo.jpg" />
+              </image>
+            </ImageView>
+            <Button focusTraversable="false" font="$x2" layoutX="239.0" layoutY="324.0" minHeight="24.0" mnemonicParsing="false" onAction="#confirmAndNext" prefHeight="37.0" prefWidth="256.0" text="Confirm and next" />
+            <Label alignment="BOTTOM_LEFT" layoutX="14.0" layoutY="310.0" prefWidth="210.0" text="*  obligated fields" textAlignment="RIGHT">
+              <font>
+                <Font size="10.0" />
+              </font>
+            </Label>
+            <Separator layoutX="-6.0" layoutY="361.0" prefHeight="24.0" prefWidth="531.0" />
+            <ChoiceBox id="sortByChoiceBox" fx:id="workerStatusChoiceBox" focusTraversable="false" layoutX="133.0" layoutY="251.0" prefHeight="37.0" prefWidth="158.0">
+              <items>
+                <FXCollections fx:factory="observableArrayList">
+                  <String fx:value="Item 1" />
+                  <String fx:value="Item 2" />
+                  <String fx:value="Item 3" />
+                </FXCollections>
+              </items>
+            </ChoiceBox>
+            <Label alignment="CENTER_RIGHT" font="$x2" layoutX="0.0" layoutY="258.0" prefWidth="119.0" text="Worker status:" textAlignment="RIGHT" />
+          </children>
+        </AnchorPane>
+      </items>
+    </SplitPane>
+    <TextField fx:id="numberOfWorkersTextField" focusTraversable="false" layoutX="732.0" layoutY="38.0" prefHeight="37.0" prefWidth="73.0" />
+    <TextField fx:id="companyNameTextField" focusTraversable="false" layoutX="152.0" layoutY="38.0" prefHeight="37.0" prefWidth="401.0" />
+    <Label font="$x2" layoutX="17.0" layoutY="44.0" prefWidth="135.0" text="Company name:" />
+    <Label alignment="CENTER_RIGHT" font="$x2" layoutX="553.0" layoutY="44.0" prefWidth="171.0" text="Number of workers:" textAlignment="RIGHT" />
+    <Button focusTraversable="false" font="$x2" layoutX="821.0" layoutY="38.0" mnemonicParsing="false" onAction="#acceptCompany" prefHeight="37.0" prefWidth="119.0" text="Accept" />
+  </children>
+</AnchorPane>

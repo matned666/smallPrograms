@@ -6,7 +6,7 @@ import javafx.scene.Scene;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
 
-public class PersonelMain  extends Application {
+public class PersonnelMain extends Application {
 
     @Override
     public void start(Stage primaryStage) throws Exception {
@@ -14,10 +14,10 @@ public class PersonelMain  extends Application {
 
         FXMLLoader loader = new FXMLLoader();
         loader.setLocation(getClass()
-                .getResource("/personelInfo.fxml"));
+                .getResource("/personnelInfo.fxml"));
         AnchorPane anchorPane = loader.load();
-        PersonelController controller = loader.getController();
-        primaryStage.setTitle("Personel Info");
+        PersonnelController controller = loader.getController();
+        primaryStage.setTitle("Personnel Info");
         Scene scene = new Scene(anchorPane);
         primaryStage.setScene(scene);
         primaryStage.show();
