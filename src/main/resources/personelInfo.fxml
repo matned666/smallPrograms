@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import java.lang.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.image.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
+
+<AnchorPane prefHeight="800.0" prefWidth="1000.0" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/2.2" fx:controller="personelInfo.PersonelController">
+  <children>
+    <MenuBar layoutX="0.0" layoutY="0.0" prefWidth="1000.0" useSystemMenuBar="true">
+      <menus>
+        <Menu mnemonicParsing="false" text="File">
+          <items>
+            <MenuItem mnemonicParsing="false" onAction="#menuItemNewCompany" text="New company" />
+            <MenuItem mnemonicParsing="false" onAction="#menuItemSave" text="Save " />
+            <MenuItem mnemonicParsing="false" onAction="#menuItemLoad" text="Load" />
+            <MenuItem mnemonicParsing="false" onAction="#menuItemClose" text="Close" />
+          </items>
+        </Menu>
+        <Menu mnemonicParsing="false" text="Help">
+          <items>
+            <MenuItem mnemonicParsing="false" onAction="#menuItemInformation" text="Information" />
+          </items>
+        </Menu>
+      </menus>
+    </MenuBar>
+    <SplitPane dividerPositions="0.45954356846473027" focusTraversable="false" layoutX="13.0" layoutY="69.0" prefHeight="702.0" prefWidth="966.0">
+      <items>
+        <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="160.0" prefWidth="100.0">
+          <children>
+            <ScrollPane layoutX="0.0" layoutY="97.0" prefHeight="603.0" prefWidth="440.0">
+              <content>
+                <ListView fx:id="listView" focusTraversable="false" prefHeight="589.0" prefWidth="440.0" />
+              </content>
+            </ScrollPane>
+            <Button focusTraversable="false" layoutX="14.0" layoutY="52.0" mnemonicParsing="false" onAction="#sortByName" prefHeight="37.0" prefWidth="94.0" text="Sort by name">
+              <font>
+                <Font size="12.0" fx:id="x1" />
+              </font>
+            </Button>
+            <Button focusTraversable="false" font="$x1" layoutX="115.0" layoutY="52.0" mnemonicParsing="false" onAction="#sortBySurname" prefHeight="37.0" prefWidth="112.0" text="Sort by surname" />
+            <Button focusTraversable="false" font="$x1" layoutX="238.0" layoutY="52.0" mnemonicParsing="false" onAction="#sortByAge" prefHeight="37.0" prefWidth="84.0" text="Sort by age" />
+            <Button focusTraversable="false" font="$x1" layoutX="331.0" layoutY="52.0" mnemonicParsing="false" onAction="#sortByPosition" prefHeight="37.0" prefWidth="94.00009999999747" text="Sort by pos." />
+            <Label layoutX="14.0" layoutY="14.0" prefWidth="256.0" text="Workers sorted list:">
+              <font>
+                <Font size="18.0" fx:id="x2" />
+              </font>
+            </Label>
+            <Button focusTraversable="false" font="$x1" layoutX="331.0" layoutY="8.0" mnemonicParsing="false" onAction="#sortByID" prefHeight="37.0" prefWidth="94.00009999999747" text="Sort by ID" />
+          </children>
+        </AnchorPane>
+        <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="700.0" prefWidth="607.0">
+          <children>
+            <TextField fx:id="nameTextField" focusTraversable="false" layoutX="133.0" layoutY="60.0" prefHeight="37.0" prefWidth="362.0" />
+            <Label alignment="CENTER_RIGHT" font="$x2" layoutX="0.0" layoutY="67.0" prefWidth="119.0" text="*Name:" textAlignment="RIGHT" />
+            <TextField fx:id="surnameTextField" focusTraversable="false" layoutX="133.0" layoutY="108.0" prefHeight="37.0" prefWidth="362.0" />
+            <Label alignment="CENTER_RIGHT" font="$x2" layoutX="0.0" layoutY="115.0" prefWidth="119.0" text="*Surname:" textAlignment="RIGHT" />
+            <TextField fx:id="ageTextField" focusTraversable="false" layoutX="133.0" layoutY="155.0" prefHeight="37.0" prefWidth="362.0" />
+            <Label alignment="CENTER_RIGHT" font="$x2" layoutX="0.0" layoutY="162.0" prefWidth="119.0" text="*Age:" textAlignment="RIGHT" />
+            <TextField fx:id="positionTextField" focusTraversable="false" layoutX="133.0" layoutY="203.0" prefHeight="37.0" prefWidth="362.0" />
+            <Label alignment="CENTER_RIGHT" font="$x2" layoutX="0.0" layoutY="210.0" prefWidth="119.0" text="Position:" textAlignment="RIGHT" />
+            <Label alignment="CENTER_RIGHT" font="$x2" layoutX="277.0" layoutY="23.0" prefWidth="119.0" text="Worker's ID:" textAlignment="RIGHT" />
+            <TextField fx:id="workersIdTextField" editable="false" focusTraversable="false" layoutX="409.0" layoutY="21.0" prefHeight="24.0" prefWidth="84.0" />
+            <ImageView fitHeight="254.68774570928554" fitWidth="362.0" layoutX="80.0" layoutY="411.0" pickOnBounds="true" preserveRatio="true">
+              <image>
+                <Image url="@personelInfo/logo.jpg" />
+              </image>
+            </ImageView>
+            <Button focusTraversable="false" font="$x2" layoutX="237.0" layoutY="260.0" minHeight="24.0" mnemonicParsing="false" onAction="#confirmAndNext" prefHeight="37.0" prefWidth="256.0" text="Confirm and next" />
+            <Label alignment="BOTTOM_LEFT" layoutX="14.0" layoutY="248.0" prefWidth="210.0" text="*  obligated fields" textAlignment="RIGHT">
+              <font>
+                <Font size="10.0" />
+              </font>
+            </Label>
+            <Separator layoutX="-5.0" layoutY="347.0" prefWidth="531.0" />
+          </children>
+        </AnchorPane>
+      </items>
+    </SplitPane>
+    <TextField fx:id="numberOfWorkersTextField" focusTraversable="false" layoutX="731.0" layoutY="26.0" prefHeight="37.0" prefWidth="73.0" />
+    <TextField fx:id="companyNameTextField" focusTraversable="false" layoutX="151.0" layoutY="26.0" prefHeight="37.0" prefWidth="401.0" />
+    <Label font="$x2" layoutX="16.0" layoutY="32.0" prefWidth="135.0" text="Company name:" />
+    <Label alignment="CENTER_RIGHT" font="$x2" layoutX="552.0" layoutY="32.0" prefWidth="171.0" text="Number of workers:" textAlignment="RIGHT" />
+    <Button focusTraversable="false" font="$x2" layoutX="820.0" layoutY="26.0" mnemonicParsing="false" onAction="#acceptCompany" prefHeight="37.0" prefWidth="159.0" text="Accept" />
+  </children>
+</AnchorPane>
