@@ -273,6 +273,7 @@ public class PersonnelController {
         workersIdTextField.setText("");
         companyNameTextField.setText("");
         numberOfWorkersTextField.setText("");
+        refreshWorkerButtons();
     }
 
     @FXML
@@ -297,13 +298,17 @@ public class PersonnelController {
         numberOfWorkersTextField.setText(temp.get(1)[0].trim());
         acceptCompany(new ActionEvent());
 
+        System.out.println(temp.size());
+
         for (int i =2 ; i < temp.size(); i++) {
+
             company.getListOfWorkers().get(i-2).setNAME(temp.get(i)[1]);
             company.getListOfWorkers().get(i-2).setSURNAME(temp.get(i)[2]);
             company.getListOfWorkers().get(i-2).setAGE(Integer.parseInt(temp.get(i)[3].trim()));
             company.getListOfWorkers().get(i-2).setPosition(temp.get(i)[4]);
             company.getListOfWorkers().get(i-2).setWorkerType(returnWorkersType(temp.get(i)[5]));
         }
+
         refreshWorkerButtons();
     }
 
@@ -312,6 +317,7 @@ public class PersonnelController {
     @FXML
     private void menuItemSave(ActionEvent actionEvent) {
        try {
+           company.sort(SortPersonType.ID,1);
            if (company != null) {
                FileChooser fileChooser = new FileChooser();
                FileChooser.ExtensionFilter extFilter = new FileChooser.ExtensionFilter("PCSI files (*.pcsi)", "*.pcsi");
@@ -344,6 +350,11 @@ public class PersonnelController {
     }
 
     public void renameCompany(ActionEvent actionEvent) {
-        company.setName(companyNameTextField.getText());
+
+        try {
+            company.setName(companyNameTextField.getText());
+        } catch (Exception e) {
+            System.out.println("Error");
+        }
     }
 }

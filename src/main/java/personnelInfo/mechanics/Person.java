@@ -63,7 +63,7 @@ public class Person {
 
     @Override
     public String toString() {
-        return ID + ";" + NAME + ";" + SURNAME + ";" + AGE + ";" + position + ";\n";
+        return ID + ";" + NAME + ";" + SURNAME + ";" + AGE + ";" + position + ";" + workerType.toString() + ";\n";
     }
 
 
