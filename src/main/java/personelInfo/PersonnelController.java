@@ -276,14 +276,14 @@ public class PersonnelController {
     }
     @FXML
     private void menuItemLoad(ActionEvent actionEvent) {
-
+        System.out.println("TODO");
     }
     @FXML
     private void menuItemSave(ActionEvent actionEvent) {
-
+        System.out.println("TODO");
     }
     @FXML
     private void menuItemInformation(ActionEvent actionEvent) {
-
+        System.out.println("Made by Mateusz Niedbał");
     }
 }
