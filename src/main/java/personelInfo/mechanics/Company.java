@@ -79,15 +79,21 @@ public class Company {
                 listOfWorkers.set(i-1,new Person.PersonBuilder(name,surname,age).position(position).ID(i).build());
     }
 
-    void addWorker() {
+    public void addWorker() {
         listOfWorkers.add(new Person.PersonBuilder("","",0)
                 .position("")
                 .ID(listOfWorkers.size()+1)
                 .build());
     }
 
-    void removeWorker(int id) {
+    public void removeWorker(int id) {
         listOfWorkers.remove(findWorkerByHisId(id));
+    }
+
+    public void clear(){
+        listOfWorkers.clear();
+        name = "";
+        workersNumber = 0;
     }
 
     @Override

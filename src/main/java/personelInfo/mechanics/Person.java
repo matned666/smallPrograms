@@ -56,6 +56,10 @@ public class Person {
         this.workerType = WorkersType.ACTUAL_WORKER;
     }
 
+    public String print() {
+        return "ID:"+ID+", name:"+NAME+", surname:"+SURNAME+", age:"+AGE+", position: "+position+", status:"+workerType.toString();
+    }
+
     @Override
     public String toString() {
         return ID + ";" + NAME + ";" + SURNAME + ";" + AGE + ";" + position + ";\n";
