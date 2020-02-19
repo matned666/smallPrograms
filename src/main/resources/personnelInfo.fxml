@@ -45,7 +45,7 @@
                 <Font size="12.0" fx:id="x1" />
               </font>
             </Button>
-            <Button focusTraversable="false" font="$x1" layoutX="133.0" layoutY="638.0" mnemonicParsing="false" onAction="#removeWorker" prefHeight="37.0" prefWidth="105.0" text="Remove worker" />
+            <Button focusTraversable="false" font="$x1" layoutX="133.0" layoutY="638.0" mnemonicParsing="false" onAction="#removeWorker" prefHeight="37.0" prefWidth="105.0" text="Delete worker" />
             <ChoiceBox fx:id="sortByChoiceBox" focusTraversable="false" layoutX="287.0" layoutY="14.0" prefHeight="37.0" prefWidth="135.0">
               <items>
                 <FXCollections fx:factory="observableArrayList">
