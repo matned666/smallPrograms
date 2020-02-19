@@ -1,6 +1,6 @@
-package personelInfo.mechanics;
+package personnelInfo.mechanics;
 
-import personelInfo.WorkersType;
+import personnelInfo.WorkersType;
 
 public class Person {
 
@@ -47,6 +47,7 @@ public class Person {
         this.workerType = workerType;
     }
 
+
     private Person(PersonBuilder builder) {
         this.NAME = builder.NAME;
         this.SURNAME = builder.SURNAME;
@@ -57,13 +58,15 @@ public class Person {
     }
 
     public String print() {
-        return "ID:"+ID+", name:"+NAME+", surname:"+SURNAME+", age:"+AGE+", position: "+position+", status:"+workerType.toString();
+        return "ID:"+ID+",  "+NAME+" "+SURNAME+", age:"+AGE+",  "+position+",  "+workerType.toString();
     }
 
     @Override
     public String toString() {
         return ID + ";" + NAME + ";" + SURNAME + ";" + AGE + ";" + position + ";\n";
     }
+
+
 
     static class PersonBuilder {
 

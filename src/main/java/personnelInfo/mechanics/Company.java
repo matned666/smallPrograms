@@ -1,8 +1,6 @@
-package personelInfo.mechanics;
+package personnelInfo.mechanics;
 
-import java.util.ArrayList;
-import java.util.Comparator;
-import java.util.List;
+import java.util.*;
 
 public class Company {
 
@@ -23,6 +21,9 @@ public class Company {
     }
 
 
+    public void setName(String name) {
+        this.name = name;
+    }
 
     public ArrayList<Person> getListOfWorkers() {
         return listOfWorkers;
@@ -98,8 +99,8 @@ public class Company {
 
     @Override
     public String toString() {
-        StringBuilder temp = new StringBuilder(name + "\n");
-        temp.append(listOfWorkers.size()).append("\n");
+        StringBuilder temp = new StringBuilder(name + ";\n");
+        temp.append(listOfWorkers.size()).append(";\n");
         for (Person el : listOfWorkers){
             temp.append(el.toString());
         }

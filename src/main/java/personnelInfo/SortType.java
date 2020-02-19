@@ -1,4 +1,4 @@
-package personelInfo;
+package personnelInfo;
 
 public enum SortType {
     SORT_BY_ID,

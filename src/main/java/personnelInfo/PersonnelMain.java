@@ -1,4 +1,4 @@
-package personelInfo;
+package personnelInfo;
 
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;

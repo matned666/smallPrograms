@@ -1,4 +1,4 @@
-package personelInfo;
+package personnelInfo;
 
 
 import javafx.application.Platform;
@@ -10,12 +10,18 @@ import javafx.scene.control.Button;
 import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.VBox;
-import personelInfo.mechanics.Company;
-import personelInfo.mechanics.Person;
-import personelInfo.mechanics.SortPersonType;
+import javafx.scene.text.Font;
+import javafx.stage.FileChooser;
+import javafx.stage.Stage;
+import personnelInfo.mechanics.Company;
+import personnelInfo.mechanics.Person;
+import personnelInfo.mechanics.SortPersonType;
 
-import java.util.LinkedList;
-import java.util.List;
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.io.PrintWriter;
+import java.util.*;
 
 public class PersonnelController {
 
@@ -26,6 +32,8 @@ public class PersonnelController {
     public VBox vBoxWithWorkers;
     @FXML
     public ChoiceBox<String> workerStatusChoiceBox;
+    public Font x2;
+    public Font x1;
     @FXML
     private TextField nameTextField;
     @FXML
@@ -124,14 +132,12 @@ public class PersonnelController {
         }
     }
 
-
     private void workerButton(Button button, int i) {
         button.setPrefSize(430, 30);
-        int finalI = i;
         button.setOnAction(eventHandler -> {
-            setTextFields(finalI);
-            actualPerson = company.getListOfWorkers().get(finalI);
-            actualWorkerButton = buttonsWithWorkers.get(finalI);
+            setTextFields(i);
+            actualPerson = company.getListOfWorkers().get(i);
+            actualWorkerButton = buttonsWithWorkers.get(i);
         });
         buttonsWithWorkers.get(i).setText(company.getListOfWorkers().get(i).print());
         button.setWrapText(true);
@@ -235,7 +241,7 @@ public class PersonnelController {
             case "SORT_BY_POSITION_REV":
                 company.sort(SortPersonType.POSITION,-1);
             default:
-                company.sort(SortPersonType.ID,1);;
+                company.sort(SortPersonType.ID,1);
                 break;
         }
     }
@@ -248,7 +254,6 @@ public class PersonnelController {
             default: return null;
         }
     }
-
 
     @FXML
     private void menuItemNewCompany(ActionEvent actionEvent) {
@@ -274,16 +279,71 @@ public class PersonnelController {
     private void menuItemClose(ActionEvent actionEvent) {
         Platform.exit();
     }
+
     @FXML
-    private void menuItemLoad(ActionEvent actionEvent) {
-        System.out.println("TODO");
+    private void menuItemLoad(ActionEvent actionEvent) throws FileNotFoundException {
+        FileChooser fileChooser = new FileChooser();
+        FileChooser.ExtensionFilter extFilter = new FileChooser.ExtensionFilter("PCSI files (*.pcsi)", "*.pcsi");
+        fileChooser.getExtensionFilters().add(extFilter);
+        File file = fileChooser.showOpenDialog(new Stage());
+        List<String[]> temp = new LinkedList<>();
+        if (file != null) {
+            Scanner scanner = new Scanner(file);
+            while (scanner.hasNextLine()) {
+                if(scanner.hasNextLine())temp.add(scanner.nextLine().split(";"));
+            }
+        }
+        companyNameTextField.setText(temp.get(0)[0].trim());
+        numberOfWorkersTextField.setText(temp.get(1)[0].trim());
+        acceptCompany(new ActionEvent());
+
+        for (int i =2 ; i < temp.size(); i++) {
+            company.getListOfWorkers().get(i-2).setNAME(temp.get(i)[1]);
+            company.getListOfWorkers().get(i-2).setSURNAME(temp.get(i)[2]);
+            company.getListOfWorkers().get(i-2).setAGE(Integer.parseInt(temp.get(i)[3].trim()));
+            company.getListOfWorkers().get(i-2).setPosition(temp.get(i)[4]);
+            company.getListOfWorkers().get(i-2).setWorkerType(returnWorkersType(temp.get(i)[5]));
+        }
+        refreshWorkerButtons();
     }
+
+
+
     @FXML
     private void menuItemSave(ActionEvent actionEvent) {
-        System.out.println("TODO");
+       try {
+           if (company != null) {
+               FileChooser fileChooser = new FileChooser();
+               FileChooser.ExtensionFilter extFilter = new FileChooser.ExtensionFilter("PCSI files (*.pcsi)", "*.pcsi");
+               fileChooser.getExtensionFilters().add(extFilter);
+               File file = fileChooser.showSaveDialog(new Stage());
+               if (file != null) {
+                   saveTextToFile(company.toString(), file);
+               }
+           }
+       }catch(Exception ex){
+           System.out.println("Error");
+       }
     }
+
+    private void saveTextToFile(String content, File file) {
+        try {
+            PrintWriter writer;
+            writer = new PrintWriter(file);
+            writer.println(content);
+            writer.close();
+        } catch (IOException ex) {
+            ex.printStackTrace();
+        }
+    }
+
+
     @FXML
     private void menuItemInformation(ActionEvent actionEvent) {
         System.out.println("Made by Mateusz Niedbał");
+    }
+
+    public void renameCompany(ActionEvent actionEvent) {
+        company.setName(companyNameTextField.getText());
     }
 }

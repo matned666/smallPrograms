@@ -1,4 +1,4 @@
-package personelInfo.mechanics;
+package personnelInfo.mechanics;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;

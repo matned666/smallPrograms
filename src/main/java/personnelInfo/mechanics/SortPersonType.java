@@ -1,4 +1,4 @@
-package personelInfo.mechanics;
+package personnelInfo.mechanics;
 
 public enum SortPersonType {
     ID,

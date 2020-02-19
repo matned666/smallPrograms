@@ -1,4 +1,4 @@
-package personelInfo;
+package personnelInfo;
 
 public enum WorkersType {
     ACTUAL_WORKER,
