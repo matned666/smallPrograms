@@ -53,9 +53,9 @@
           </FXCollections>
         </items>
       </ChoiceBox>
-      <TextField id="numberOfWorkersTextField" fx:id="additionalSearchTextField" focusTraversable="false" layoutX="114.0" layoutY="65.0" prefHeight="37.0" prefWidth="308.0" />
+      <TextField id="numberOfWorkersTextField" fx:id="additionalSearchTextField" focusTraversable="false" layoutX="114.0" layoutY="65.0" prefHeight="37.0" prefWidth="308.0" visible="false" />
       <Button focusTraversable="false" font="$x2" layoutX="114.0" layoutY="115.0" mnemonicParsing="false" onAction="#searchWorkers" prefHeight="37.0" prefWidth="308.0" text="Show workers" />
-      <Label layoutX="22.0" layoutY="65.0" prefWidth="73.0" text="Additional search" wrapText="true" />
+      <Label layoutX="22.0" layoutY="65.0" prefWidth="73.0" text="Additional search" visible="false" wrapText="true" />
     </AnchorPane>
     <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="680.0" prefWidth="523.0">
       <TextField fx:id="nameTextField" focusTraversable="false" layoutX="133.0" layoutY="60.0" prefHeight="37.0" prefWidth="362.0" />
@@ -71,7 +71,7 @@
       <ImageView fitHeight="100.0" fitWidth="150.0" layoutX="342.0" layoutY="559.0" pickOnBounds="true" preserveRatio="true">
         <Image url="@personnelInfo/logo.jpg" />
       </ImageView>
-      <Button focusTraversable="false" font="$x2" layoutX="239.0" layoutY="324.0" minHeight="24.0" mnemonicParsing="false" onAction="#confirmAndNext" prefHeight="37.0" prefWidth="256.0" text="Confirm and next" />
+      <Button focusTraversable="false" font="$x2" layoutX="239.0" layoutY="324.0" minHeight="24.0" mnemonicParsing="false" onAction="#confirmAndNext" prefHeight="37.0" prefWidth="256.0" text="Confirm" />
       <Label alignment="BOTTOM_LEFT" layoutX="14.0" layoutY="310.0" prefWidth="210.0" text="*  obligated fields" textAlignment="RIGHT">
         <font>
           <Font size="10.0" />
