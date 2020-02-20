@@ -14,6 +14,7 @@ import javafx.scene.text.Font;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 import personnelInfo.mechanics.Company;
+import personnelInfo.mechanics.Encrypting;
 import personnelInfo.mechanics.Person;
 import personnelInfo.mechanics.SortPersonType;
 
@@ -32,8 +33,12 @@ public class PersonnelController {
     public VBox vBoxWithWorkers;
     @FXML
     public ChoiceBox<String> workerStatusChoiceBox;
+    @FXML
     public Font x2;
+    @FXML
     public Font x1;
+    @FXML
+    public TextField encryptMoveField;
     @FXML
     private TextField nameTextField;
     @FXML
@@ -52,10 +57,11 @@ public class PersonnelController {
     private ChoiceBox<String> sortByChoiceBox;
     @FXML
     private ChoiceBox<String> workersTypeShowChoiceBox;
-    private List<Button> buttonsWithWorkers;
+    private List<WorkerField> buttonsWithWorkers;
     private Company company;
     private Person actualPerson;
     private Button actualWorkerButton;
+    private int encryptMove;
 
     public PersonnelController() {
     }
@@ -123,9 +129,9 @@ public class PersonnelController {
             company = new Company(companyNameTextField.getText(), Integer.parseInt(numberOfWorkersTextField.getText()));
             buttonsWithWorkers = new LinkedList<>();
             for (int i = 0; i < company.getListOfWorkers().size(); i++) {
-                buttonsWithWorkers.add(new Button());
-                workerButton(buttonsWithWorkers.get(i), i);
-                vBoxWithWorkers.getChildren().add(buttonsWithWorkers.get(i));
+                buttonsWithWorkers.add(new WorkerField(company.getListOfWorkers().get(i)));
+                workerButton(buttonsWithWorkers.get(i).getButton(), i);
+                vBoxWithWorkers.getChildren().add(buttonsWithWorkers.get(i).getButton());
             }
         } catch (Exception ex) {
             System.out.println("error");
@@ -136,10 +142,10 @@ public class PersonnelController {
         button.setPrefSize(430, 30);
         button.setOnAction(eventHandler -> {
             setTextFields(i);
-            actualPerson = company.getListOfWorkers().get(i);
-            actualWorkerButton = buttonsWithWorkers.get(i);
+            actualPerson = buttonsWithWorkers.get(i).getPerson();
+            actualWorkerButton = buttonsWithWorkers.get(i).getButton();
         });
-        buttonsWithWorkers.get(i).setText(company.getListOfWorkers().get(i).print());
+        buttonsWithWorkers.get(i).getButton().setText(company.getListOfWorkers().get(i).print());
         button.setWrapText(true);
     }
 
@@ -184,28 +190,32 @@ public class PersonnelController {
 
 
     private void refreshWorkerButtons(){
-        vBoxWithWorkers.getChildren().clear();
-        buttonsWithWorkers = new LinkedList<>();
-        int counter = 0;
-        for(int i = 0;i < company.getListOfWorkers().size(); i++) {
 
-            if((returnWorkersType(workersTypeShowChoiceBox.getValue()) == company.getListOfWorkers().get(i).getWorkerType()
-                    || returnWorkersType(workersTypeShowChoiceBox.getValue()) == WorkersType.ACTUAL_AND_REMOVED)
-                    && (company.getListOfWorkers().get(i).print().toLowerCase().contains(additionalSearchTextField.getText()))) {
+        try {
+            vBoxWithWorkers.getChildren().clear();
+            buttonsWithWorkers = new LinkedList<>();
+            int counter = 0;
+            for(int i = 0;i < company.getListOfWorkers().size(); i++) {
 
-                buttonsWithWorkers.add(new Button());
-                buttonsWithWorkers.get(counter).setPrefSize(430, 30);
-                int finalCounter = counter;
-                int finalI = i;
-                buttonsWithWorkers.get(counter).setOnAction(eventHandler -> {
-                    setTextFields(finalI);
-                    actualPerson = company.getListOfWorkers().get(finalI);
-                    actualWorkerButton = buttonsWithWorkers.get(finalCounter);
-                });
-                buttonsWithWorkers.get(counter).setText(company.getListOfWorkers().get(i).print());
-                vBoxWithWorkers.getChildren().add(buttonsWithWorkers.get(counter));
-                counter++;
+                if((returnWorkersType(workersTypeShowChoiceBox.getValue()) == company.getListOfWorkers().get(i).getWorkerType()
+                        || returnWorkersType(workersTypeShowChoiceBox.getValue()) == WorkersType.ACTUAL_AND_REMOVED)
+                        && (company.getListOfWorkers().get(i).print().toLowerCase().contains(additionalSearchTextField.getText()))) {
+
+                    buttonsWithWorkers.add(new WorkerField(company.getListOfWorkers().get(i)));
+                    buttonsWithWorkers.get(counter).getButton().setPrefSize(430, 30);
+                    int finalCounter = counter;
+                    buttonsWithWorkers.get(counter).getButton().setOnAction(eventHandler -> {
+                        setTextFields(finalCounter);
+                        actualPerson = buttonsWithWorkers.get(finalCounter).getPerson();
+                        actualWorkerButton =buttonsWithWorkers.get(finalCounter).getButton();
+                    });
+                    buttonsWithWorkers.get(counter).getButton().setText(company.getListOfWorkers().get(i).print());
+                    vBoxWithWorkers.getChildren().add(buttonsWithWorkers.get(counter).getButton());
+                    counter++;
+                }
             }
+        } catch (Exception e) {
+            System.out.println("error");
         }
     }
 
@@ -282,34 +292,42 @@ public class PersonnelController {
     }
 
     @FXML
-    private void menuItemLoad(ActionEvent actionEvent) throws FileNotFoundException {
-        FileChooser fileChooser = new FileChooser();
-        FileChooser.ExtensionFilter extFilter = new FileChooser.ExtensionFilter("PCSI files (*.pcsi)", "*.pcsi");
-        fileChooser.getExtensionFilters().add(extFilter);
-        File file = fileChooser.showOpenDialog(new Stage());
-        List<String[]> temp = new LinkedList<>();
-        if (file != null) {
-            Scanner scanner = new Scanner(file);
-            while (scanner.hasNextLine()) {
-                if(scanner.hasNextLine())temp.add(scanner.nextLine().split(";"));
+    private void menuItemLoad(ActionEvent actionEvent) {
+        try {
+            encryptMove = Integer.parseInt(encryptMoveField.getText());
+
+            FileChooser fileChooser = new FileChooser();
+            FileChooser.ExtensionFilter extFilter = new FileChooser.ExtensionFilter("PCSI files (*.pcsi)", "*.pcsi");
+            fileChooser.getExtensionFilters().add(extFilter);
+            File file = fileChooser.showOpenDialog(new Stage());
+            List<String[]> temp = new LinkedList<>();
+            if (file != null) {
+                Scanner scanner = new Scanner(file);
+                while (scanner.hasNextLine()) {
+                    if(scanner.hasNextLine())temp.add(scanner.nextLine().split(";"));
+                }
             }
+            companyNameTextField.setText(Encrypting.decrypt(temp.get(0)[0].trim(),encryptMove));
+            numberOfWorkersTextField.setText(temp.get(1)[0].trim());
+            acceptCompany(new ActionEvent());
+
+            System.out.println(temp.size());
+
+            for (int i =2 ; i < temp.size()-1; i++) {
+
+                company.getListOfWorkers().get(i-2).setNAME(Encrypting.decrypt(temp.get(i)[1],encryptMove));
+                company.getListOfWorkers().get(i-2).setSURNAME(Encrypting.decrypt(temp.get(i)[2], encryptMove));
+                company.getListOfWorkers().get(i-2).setAGE(Integer.parseInt(temp.get(i)[3].trim()));
+                company.getListOfWorkers().get(i-2).setPosition(Encrypting.decrypt(temp.get(i)[4],encryptMove));
+                company.getListOfWorkers().get(i-2).setWorkerType(returnWorkersType(Encrypting.decrypt(temp.get(i)[5],encryptMove)));
+            }
+
+            refreshWorkerButtons();
+        } catch (NumberFormatException e) {
+            System.out.println("No encrypt movement");
+        } catch (FileNotFoundException e) {
+            System.out.println("File not found error");
         }
-        companyNameTextField.setText(temp.get(0)[0].trim());
-        numberOfWorkersTextField.setText(temp.get(1)[0].trim());
-        acceptCompany(new ActionEvent());
-
-        System.out.println(temp.size());
-
-        for (int i =2 ; i < temp.size(); i++) {
-
-            company.getListOfWorkers().get(i-2).setNAME(temp.get(i)[1]);
-            company.getListOfWorkers().get(i-2).setSURNAME(temp.get(i)[2]);
-            company.getListOfWorkers().get(i-2).setAGE(Integer.parseInt(temp.get(i)[3].trim()));
-            company.getListOfWorkers().get(i-2).setPosition(temp.get(i)[4]);
-            company.getListOfWorkers().get(i-2).setWorkerType(returnWorkersType(temp.get(i)[5]));
-        }
-
-        refreshWorkerButtons();
     }
 
 
@@ -317,6 +335,7 @@ public class PersonnelController {
     @FXML
     private void menuItemSave(ActionEvent actionEvent) {
        try {
+           encryptMove = Integer.parseInt(encryptMoveField.getText());
            company.sort(SortPersonType.ID,1);
            if (company != null) {
                FileChooser fileChooser = new FileChooser();
@@ -324,7 +343,7 @@ public class PersonnelController {
                fileChooser.getExtensionFilters().add(extFilter);
                File file = fileChooser.showSaveDialog(new Stage());
                if (file != null) {
-                   saveTextToFile(company.toString(), file);
+                   saveTextToFile(Encrypting.encrypt(company.toString(),encryptMove), file);
                }
            }
        }catch(Exception ex){
