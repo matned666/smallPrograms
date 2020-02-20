@@ -9,7 +9,7 @@ public class WorkerField {
     private Button button;
     private Person person;
 
-    public WorkerField(Person person) {
+    WorkerField(Person person) {
         button = new Button();
         this.person = person;
     }
@@ -26,7 +26,7 @@ public class WorkerField {
         this.button = button;
     }
 
-    public Person getPerson() {
+    Person getPerson() {
         return person;
     }
 
