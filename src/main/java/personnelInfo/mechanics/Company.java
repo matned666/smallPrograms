@@ -12,10 +12,10 @@ public class Company {
         this.name = name;
         this.workersNumber = workersNumber;
         listOfWorkers = new ArrayList<>();
-        for(int i = 0; i< workersNumber; i++){
-            listOfWorkers.add(new Person.PersonBuilder("","",0)
+        for (int i = 0; i < workersNumber; i++) {
+            listOfWorkers.add(new Person.PersonBuilder("", "", 0)
                     .position("")
-                    .ID(listOfWorkers.size()+1)
+                    .ID(listOfWorkers.size() + 1)
                     .build());
         }
     }
@@ -29,31 +29,31 @@ public class Company {
         return listOfWorkers;
     }
 
-    public void sort(SortPersonType sortPersonByType, int reversedSortSwitch_Minus1ToReverse_Plus1ToNormal){
-        sortInner(listOfWorkers,sortPersonByType, reversedSortSwitch_Minus1ToReverse_Plus1ToNormal);
+    public void sort(SortPersonType sortPersonByType, int reversedSortSwitch_Minus1ToReverse_Plus1ToNormal) {
+        sortInner(listOfWorkers, sortPersonByType, reversedSortSwitch_Minus1ToReverse_Plus1ToNormal);
     }
 
-    private void sortInner(List<Person> list, SortPersonType sortPersonByType, int reversedSortSwitch_Minus1ToReverse_Plus1ToNormal){
+    private void sortInner(List<Person> list, SortPersonType sortPersonByType, int reversedSortSwitch_Minus1ToReverse_Plus1ToNormal) {
         list.sort(new Comparator<Person>() {
 
             @Override
             public int compare(Person o1, Person o2) {
-                return compareInner(o1,o2);
+                return compareInner(o1, o2);
             }
 
             private int compareInner(Person o1, Person o2) {
                 int temp;
-                switch (sortPersonByType){
+                switch (sortPersonByType) {
                     case ID:
-                        return compareNumbers(o1.getID(),o2.getID())*reversedSortSwitch_Minus1ToReverse_Plus1ToNormal;
+                        return compareNumbers(o1.getID(), o2.getID()) * reversedSortSwitch_Minus1ToReverse_Plus1ToNormal;
                     case AGE:
-                        return compareNumbers(o1.getAGE(),o2.getAGE())*reversedSortSwitch_Minus1ToReverse_Plus1ToNormal;
+                        return compareNumbers(o1.getAGE(), o2.getAGE()) * reversedSortSwitch_Minus1ToReverse_Plus1ToNormal;
                     case NAME:
-                        return compareWords(o1.getNAME(),o2.getNAME())*reversedSortSwitch_Minus1ToReverse_Plus1ToNormal;
+                        return compareWords(o1.getNAME(), o2.getNAME()) * reversedSortSwitch_Minus1ToReverse_Plus1ToNormal;
                     case SURNAME:
-                        return compareWords(o1.getSURNAME(),o2.getSURNAME())*reversedSortSwitch_Minus1ToReverse_Plus1ToNormal;
+                        return compareWords(o1.getSURNAME(), o2.getSURNAME()) * reversedSortSwitch_Minus1ToReverse_Plus1ToNormal;
                     case POSITION:
-                        return compareWords(o1.getPosition(),o2.getPosition())*reversedSortSwitch_Minus1ToReverse_Plus1ToNormal;
+                        return compareWords(o1.getPosition(), o2.getPosition()) * reversedSortSwitch_Minus1ToReverse_Plus1ToNormal;
                     default:
                         return 0;
                 }
@@ -69,21 +69,22 @@ public class Company {
         });
     }
 
-    Person findWorkerByHisId(int ID){
-        for(Person element:listOfWorkers) {
-            if(element.getID() == ID) return element;
-        } return null;
+    Person findWorkerByHisId(int ID) {
+        for (Person element : listOfWorkers) {
+            if (element.getID() == ID) return element;
+        }
+        return null;
     }
 
 
     void fillWorker(int i, String name, String surname, int age, String position) {
-                listOfWorkers.set(i-1,new Person.PersonBuilder(name,surname,age).position(position).ID(i).build());
+        listOfWorkers.set(i - 1, new Person.PersonBuilder(name, surname, age).position(position).ID(i).build());
     }
 
     public void addWorker() {
-        listOfWorkers.add(new Person.PersonBuilder("","",0)
+        listOfWorkers.add(new Person.PersonBuilder("", "", 0)
                 .position("")
-                .ID(listOfWorkers.size()+1)
+                .ID(listOfWorkers.size() + 1)
                 .build());
     }
 
@@ -91,7 +92,7 @@ public class Company {
         listOfWorkers.remove(findWorkerByHisId(id));
     }
 
-    public void clear(){
+    public void clear() {
         listOfWorkers.clear();
         name = "";
         workersNumber = 0;
@@ -101,9 +102,13 @@ public class Company {
     public String toString() {
         StringBuilder temp = new StringBuilder(name + ";\n");
         temp.append(listOfWorkers.size()).append(";\n");
-        for (Person el : listOfWorkers){
+        for (Person el : listOfWorkers) {
             temp.append(el.toString());
         }
-            return temp.toString();
+        return temp.toString();
     }
+
+
+
 }
+
